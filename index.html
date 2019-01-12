@@ -1,35 +1,29 @@
-<!-- Usando HTML5 -->
 <!DOCTYPE html>
-
 <html lang="pt" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<!-- Nome de teste 'Pagina' -->
-		<title>Pagina</title>
+		<title>Pagina:Login</title>
 		<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<!-- Script para mover os botoes -->
-		<script type="text/javascript" src="drag.js"></script>
+		<link rel="stylesheet" type="text/css" href="style_login.css">
+		<!-- Script para autenticacao -->
+		<script type="text/javascript" src="login.js"></script>
 	</head>
-	<body>
-		<h2 align="center">Horários<h2>
-		<hr/ align="center" width="25%">
-		<!-- <button draggable="auto">OOO</button> -->
-		<!-- Paragrafo -->
-		<p>
-			<span id="chair">Cadeira:</span>
-			<span id="dias">Dia:</span>
-		</p>
-		<!-- Linha Horizontal -->
-		<hr id="linha" align="center" width="100%">
-		<!-- Dropzone -->
-		<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-		<!-- Botoes arrastaveis -->
-		<div id="py1" class="bot" draggable="true" ondragstart="bot(event)">Python</div>
-		<div id="py2" class="bot" draggable="true" ondragstart="bot(event)">Python 2</div>
-		<div id="py3" class="bot" draggable="true" ondragstart="bot(event)">Python 3</div>
-		<div id="py4" class="bot" draggable="true" ondragstart="bot(event)">Python 4</div>
-		<!-- <div id="orange" class="bot" draggable="true" ondragstart="bot(event)">Orange Justice</div> -->
-		<!-- <div id="pit" class="bot" draggable="true" ondragstart="bot(event)">Piton</div> -->
+	<body bgcolor="#e6e6ff">
+		<div class="container">
+			<form action="passwordCheck.html" method="GET" onsubmit="return Login();">
+				<!-- Login -->
+				<br align="center">Login:</br>
+				<input id="usr" type="text" name="user">
+				<!-- Senha -->
+				<br>Senha:</br>
+				<input id="psswd" type="password" name="pass">
+				<br>
+					<!-- Botao de enviar -->
+					<input type="submit" value="Enviar">
+				</br>
+				<!-- Campo de avisos -->
+				<p id="warning_field"></p>
+			</form>
+		</div>
 	</body>
 </html>
