@@ -1,0 +1,37 @@
+.bot
+{
+	display: inline-block;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.2);
+	margin: 5px;
+}
+
+.dropzone
+{
+	background: #ccc;
+	padding: 10px;
+	margin-top: 10px;
+	margin-right: 900px;
+	visibility: visible;
+}
+
+#linha
+{
+	margin-top: 100px;	
+	visibility: hidden;
+}
+
+#chair
+{
+	float: left;	
+	margin-top: 40px;
+	visibility: hidden;
+}
+
+#dias
+{
+	float: right;
+	margin-top: 40px;
+	margin-right: 400px;
+	visibility: hidden;
+}
