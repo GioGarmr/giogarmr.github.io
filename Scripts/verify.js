@@ -4,7 +4,7 @@ window.onload = function ()
 	//Armazena - a parte que interessa - da barra de endereco
 	var info = location.search;
 
-	console.log(info);
+	//console.log(info);
 
 	var usr = "";
 	var pass = "";
@@ -40,8 +40,11 @@ window.onload = function ()
 		}
 	}
 
-	document.getElementById("usr").innerHTML = "login=" + usr;
-	document.getElementById("pss").innerHTML = "password=" + pass;
+	/*document.getElementById("usr").innerHTML = "login=" + usr;
+	document.getElementById("pss").innerHTML = "password=" + pass;*/
+
+	//Redireciona para a pagina principal
+	window.location.replace("");
 }
 
 /*console.log("usr=" + usr);

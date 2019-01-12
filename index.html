@@ -4,25 +4,23 @@
 		<meta charset="utf-8">
 		<title>Pagina:Login</title>
 		<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="style_login.css">
+		<link rel="stylesheet" type="text/css" href="Style/style_index.css">
 		<!-- Script para autenticacao -->
-		<script type="text/javascript" src="login.js"></script>
+		<script type="text/javascript" src="Scripts/login.js"></script>
 	</head>
 	<body bgcolor="#e6e6ff">
 		<div class="container">
-			<form action="passwordCheck.html" method="GET" onsubmit="return Login();">
+			<form action="passcheck.html" method="GET" onsubmit="return Login();">
 				<!-- Login -->
-				<br align="center">Login:</br>
+				<br><label id="login">Login:</label></br>
 				<input id="usr" type="text" name="user">
 				<!-- Senha -->
-				<br>Senha:</br>
+				<br><label id="password">Senha:</label></br>
 				<input id="psswd" type="password" name="pass">
-				<br>
-					<!-- Botao de enviar -->
-					<input type="submit" value="Enviar">
-				</br>
+				<!-- Botao de enviar -->
+				<br><input id="send" type="submit" value="Enviar"></br>
 				<!-- Campo de avisos -->
-				<p id="warning_field"></p>
+				<p id="warning"></p>
 			</form>
 		</div>
 	</body>

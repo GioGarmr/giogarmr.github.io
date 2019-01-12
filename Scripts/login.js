@@ -1,4 +1,4 @@
-//Funcao chamada ao entar fazer login
+//Funcao chamada ao tentar fazer login
 function Login ()
 {
 	//Pega os valores de "usuario" e "senha" respectivamente
@@ -9,20 +9,20 @@ function Login ()
 
 	//Se ambos os campos estiverem vazios
 	if(user == "" && pass == "")
-		document.getElementById("warning_field").innerHTML = "Preencha todos os campos";
+		document.getElementById("warning").innerHTML = "Preencha todos os campos";
 	//Se somente o usuario estiver vazio
 	else if(user == "" && pass != "")
-		document.getElementById("warning_field").innerHTML = "Usuário vazio";
+		document.getElementById("warning").innerHTML = "Usuário vazio";
 	//Se somente a senha estiver vazia
 	else if(user != "" && pass == "")
-		document.getElementById("warning_field").innerHTML = "Senha vazia";
+		document.getElementById("warning").innerHTML = "Senha vazia";
 	//Se a senha e o usuario forem "admin"
 	else if(user == "admin" && pass == "admin")
-		document.getElementById("warning_field").innerHTML = "Oh, no";
+		document.getElementById("warning").innerHTML = "Oh, no";
 	//Se ambos tiverem algum conteudo
 	else if(user != "" && pass != "")
 	{
-		document.getElementById("warning_field").innerHTML = "";
+		document.getElementById("warning").innerHTML = "";
 		send = true;
 	}
 
