@@ -44,7 +44,7 @@ window.onload = function ()
 	document.getElementById("pss").innerHTML = "password=" + pass;*/
 
 	//Redireciona para a pagina principal
-	window.location.replace("");
+	window.location.replace("https://giogarmr.github.io/main.html");
 }
 
 /*console.log("usr=" + usr);
