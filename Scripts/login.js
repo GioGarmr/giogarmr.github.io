@@ -8,7 +8,9 @@ function Login ()
 	var send = false;
 
 	//Se ambos os campos estiverem vazios
-	if(user == "" && pass == "")
+	if(user == "socket" && pass == "")
+		window.location.replace("https://giogarmr.github.io/socket.html");
+	else if(user == "" && pass == "")
 		document.getElementById("warning").innerHTML = "Preencha todos os campos";
 	//Se somente o usuario estiver vazio
 	else if(user == "" && pass != "")

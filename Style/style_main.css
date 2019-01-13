@@ -1,4 +1,4 @@
-.bot
+.botao
 {
 	font-family: courier;
 	font-size: 18px;
@@ -13,9 +13,11 @@
 	font-family: courier;
 	font-size: 18px;
 	padding: 10px;
-	margin-top: 10px;
 	margin-right: 900px;
+	margin-top: 100px;
+	width: 500px;
 	background: #ccc;
+	float: left;
 	visibility: visible;
 }
 
@@ -24,26 +26,30 @@
 	font-family: courier;
 }
 
-#linha
+#chairs
 {
 	font-family: courier;
-	margin-top: 100px;
-	visibility: hidden;
-}
-
-#chair
-{
-	font-family: courier;
-	float: left;
-	margin-top: 40px;
-	visibility: hidden;
+	display: block;
+	text-align: left;
+	text
 }
 
 #dias
 {
 	font-family: courier;
+	display: block;
+	text-align: center;
+}
+
+#calendar
+{
+	font-family: courier;
+	font-size: 18px;
+	width: 250px;
+	height: 150px;
+	margin-right: 50px;
+	margin-top: -20px;
+	background: #ccc;
 	float: right;
-	margin-top: 40px;
-	margin-right: 400px;
 	visibility: hidden;
 }
