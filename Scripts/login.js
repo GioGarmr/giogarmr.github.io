@@ -1,11 +1,16 @@
+//Endereco do servidor
+const address = "wss://pagina-server.glitch.me";
+//Cria o objeto websocket
+const server = new WebSocket(address);
+
 //Funcao chamada ao tentar fazer login
 function Login ()
 {
 	//Pega os valores de "usuario" e "senha" respectivamente
 	var user = document.getElementById("usr").value;
 	var pass = document.getElementById("psswd").value;
-	//Valor a retorna para procedimento de envio
-	var send = false;
+	//Bool para validacao do usuario
+	var valid = false;
 
 	//Se ambos os campos estiverem vazios
 	if(user == "socket" && pass == "")
@@ -25,13 +30,22 @@ function Login ()
 	else if(user != "" && pass != "")
 	{
 		document.getElementById("warning").innerHTML = "";
-		send = true;
+		valid = true;
 	}
 
-	if(user == "inacio" && pass == "cafe123")
-		send = true;
+	var msg = {type: "saveusr", user: user, password: pass};
+	console.log(msg);
+	server.send(JSON.stringify(msg));
 
-	//console.log("usr=" + user + "\n" + "pass=" + pass);
-	//Retorna o bool
-	return send;
+	return valid;
+}
+
+//Quando a conexao for estabelecida, tambem "desperta" o servidor
+//caso o mesmo esteja "dormindo"
+server.onopen = () =>
+{
+	console.log("Conectado ao servidor");
+	//Habilita o botao de enviar quando houver conexao ao servidor
+	document.getElementById("send").disabled = false;
+	//console.log(msg);
 }

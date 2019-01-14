@@ -1,16 +1,40 @@
+//Endereco do servidor
+const address = "wss://pagina-server.glitch.me";
+//Cria o objeto websocket
+const server = new WebSocket(address);
+
+//Quando a conexao for estabelecida
+server.onopen = () =>
+{
+	var msg = {type: "usr"};
+
+	//Tipo "usr" - ou seja - para verificacao de usuario
+	server.send(JSON.stringify(msg));
+}
+
+//Quando a mensagem do servidor for recebida
+server.onmessage = (e) =>
+{
+	//Armazena a mensagem do servidor
+	var msgServer = e.data;
+	reply = msgServer;
+	console.log(msgServer);
+	if(msgServer == "false")
+		window.location.replace("https://giogarmr.github.io/index.html");
+	else
+		window.location.replace("https://giogarmr.github.io/main.html");
+}
+
 //Executa quando a tela for carregada
-window.onload = function ()
+/*window.onload = function ()
 {
 	//Armazena - a parte que interessa - da barra de endereco
 	var info = location.search;
-
-	//console.log(info);
 
 	var usr = "";
 	var pass = "";
 
 	var i;
-
 	//Pega o login e a senha, depois os armazena em variaveis
 	for(i = 0; ; i++)
 	{
@@ -41,11 +65,8 @@ window.onload = function ()
 	}
 
 	/*document.getElementById("usr").innerHTML = "login=" + usr;
-	document.getElementById("pss").innerHTML = "password=" + pass;*/
+	document.getElementById("pss").innerHTML = "password=" + pass;
 
 	//Redireciona para a pagina principal
-	window.location.replace("https://giogarmr.github.io/main.html");
-}
-
-/*console.log("usr=" + usr);
-console.log("pass=" + pass);*/
+	//window.location.replace("https://giogarmr.github.io/main.html");
+}*/

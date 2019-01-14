@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- V.0.1.7 -->
+<!-- V.0.1.8 -->
 <html lang="pt" dir="ltr">
 	<head>
 		<meta charset="utf-8">
@@ -11,7 +11,7 @@
 	</head>
 	<body bgcolor="#e6e6ff">
 		<div class="container">
-			<form action="passcheck.html" method="GET" onsubmit="return Login();">
+			<form action="passcheck.html" method="post" onsubmit="return Login();">
 				<!-- Login -->
 				<br><label id="login">Login:</label></br>
 				<input id="usr" type="text" name="user">
@@ -19,7 +19,7 @@
 				<br><label id="password">Senha:</label></br>
 				<input id="psswd" type="password" name="pass">
 				<!-- Botao de enviar -->
-				<br><input id="send" type="submit" value="Enviar"></br>
+				<br><input id="send" type="submit" value="Enviar" disabled></br>
 				<!-- Campo de avisos -->
 				<p id="warning"></p>
 			</form>
