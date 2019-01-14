@@ -9,13 +9,13 @@
 		<!-- Script para mover os botoes -->
 		<script type="text/javascript" src="Scripts/buttons.js"></script>
 	</head>
-	<body bgcolor="#e6e6ff">
-		<h2 id="horarios" align="center">Horários<h2>
-		<hr/ align="center" width="25%">
+	<body bgcolor=#A3A3A3>
+		<h2 id="horarios" align="left">Horários<h2>
+		<div><label id="loading" align="right">Conectando...</label></div>
 		<!-- <button draggable="auto">OOO</button> -->
 		<div class="container">
 			<!-- Dropzone e Label: "Cadeiras:"-->
-			<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<div id="dz" class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
 				<label id="chairs" align="right">Cadeiras:</label>
 			</div>
 			<!-- Calendarius e Label: "Dias:" -->
@@ -26,7 +26,5 @@
 		<div id="py2" class="botao" draggable="true" ondragstart="button(event)">Python 2</div>
 		<div id="py3" class="botao" draggable="true" ondragstart="button(event)">Python 3</div>
 		<div id="py4" class="botao" draggable="true" ondragstart="button(event)">Python 4</div>
-		<!-- <div id="orange" class="bot" draggable="true" ondragstart="bot(event)">Orange Justice</div> -->
-		<!-- <div id="pit" class="bot" draggable="true" ondragstart="bot(event)">Piton</div> -->
 	</body>
 </html>

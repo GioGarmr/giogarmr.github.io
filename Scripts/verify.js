@@ -17,7 +17,6 @@ server.onmessage = (e) =>
 {
 	//Armazena a mensagem do servidor
 	var msgServer = e.data;
-	reply = msgServer;
 	console.log(msgServer);
 	if(msgServer == "false")
 		window.location.replace("https://giogarmr.github.io/index.html");

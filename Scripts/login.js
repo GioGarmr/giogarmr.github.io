@@ -3,6 +3,12 @@ const address = "wss://pagina-server.glitch.me";
 //Cria o objeto websocket
 const server = new WebSocket(address);
 
+//Desativa o botao assim que a janela for carregada
+window.onload = function ()
+{
+	document.getElementById("send").disabled = true;
+}
+
 //Funcao chamada ao tentar fazer login
 function Login ()
 {
@@ -40,7 +46,7 @@ function Login ()
 	return valid;
 }
 
-//Quando a conexao for estabelecida, tambem "desperta" o servidor
+//Quando a conexao for estabelecida. Tambem "desperta" o servidor
 //caso o mesmo esteja "dormindo"
 server.onopen = () =>
 {

@@ -1,55 +1,127 @@
+/*.botao
+{
+font-family: "roboto";
+font-size: 18px;
+color: white;
+display: inline-block;
+padding: 8px;
+margin-left: 100px;
+margin: 3px;
+background: #515151;
+}*/
+
 .botao
 {
-	font-family: courier;
+	font-family: "roboto";
 	font-size: 18px;
+	color: white;
 	display: inline-block;
-	padding: 5px;
-	margin: 3px;
-	background: rgba(0, 0, 0, 0.2);
+	padding: 8px;
+	margin-left: 15px;
+	width: 100px;
+	float: left;
+	text-align: center;
+	background: #515151;
 }
 
 .dropzone
 {
-	font-family: courier;
+	font-family: "roboto";
 	font-size: 18px;
-	padding: 10px;
-	margin-right: 900px;
+	width: 150px;
+	height: 200px;
+	margin-left: 50px;
 	margin-top: 100px;
-	width: 500px;
-	background: #ccc;
-	float: left;
+	width: 400px;
+	height: 200px;
+	padding: 5px;
+	background: #666666;
 	visibility: visible;
 }
 
+/*.dropzone
+{
+font-family: "roboto";
+font-size: 18px;
+margin-right: 900px;
+margin-top: 100px;
+width: 500px;
+height: 85px;
+padding: 10px;
+background: #666666;
+visibility: visible;
+}*/
+
 #horarios
 {
-	font-family: courier;
+	font-family: "roboto";
+	font-size: 40px;
+	color: white;
+	padding-left: 50px;
+}
+
+#loading
+{
+	font-family: "roboto";
+	font-size: 15px;
+	color: white;
+	padding-left: 50px;
+	visibility: visible;
 }
 
 #chairs
 {
-	font-family: courier;
+	font-family: "roboto";
+	color: white;
 	display: block;
-	text-align: left;
-	text
+	text-align: center;
+}
+
+#py1
+{
+	visibility: hidden;
+}
+
+#py2
+{
+	visibility: hidden;
+}
+
+#py3
+{
+	visibility: hidden;
+}
+
+#py4
+{
+	visibility: hidden;
 }
 
 #dias
 {
-	font-family: courier;
+	font-family: "roboto";
+	color: white;
 	display: block;
 	text-align: center;
 }
 
 #calendar
 {
-	font-family: courier;
+	font-family: "roboto";
 	font-size: 18px;
-	width: 250px;
-	height: 150px;
+	width: 400px;
+	height: 210px;
 	margin-right: 50px;
-	margin-top: -20px;
-	background: #ccc;
+	margin-top: -210px;
+	background: #666666;
 	float: right;
 	visibility: hidden;
+}
+
+@font-face
+{
+	font-family: "roboto";
+	src: url("roboto.ttf");
+	font-weight: 400;
+	font-style: normal;
 }
