@@ -5,7 +5,7 @@ const server = new WebSocket(address);
 
 var dropped = [];
 
-//Permite que o botao seja largado, se ele estiver sobre da area
+//Permite que o botao seja largado, se ele estiver sobre a area
 window.allowDrop = function(action)
 {
 	action.preventDefault();
@@ -69,7 +69,7 @@ function SendInfo (type, id)
 	server.send(JSON.stringify(msg));
 }
 
-//Atualiza os botoes em um intervalo de meio segundo
+//Atualiza os botoes em um intervalo de 0,2 segundos
 setInterval(function ()
 {
 	var msg = {type: "getchair"};
@@ -78,29 +78,35 @@ setInterval(function ()
 	if(py1 == 1)
 	{
 		document.getElementById("py1").style.visibility = "visible";
-		//document.getElementById("dz").children[0].style.visibility = "visible";
+		document.getElementById("dz").children[0].style.visibility = "visible";
 	}
 	else
 	{
 		if(dropped != "py1")
+		{
 			document.getElementById("py1").style.visibility = "hidden";
-		//document.getElementById("dz").children[0].style.visibility = "hidden";
+			document.getElementById("dz").childNodes[0].style.visibility = "hidden";
+		}
 	}
 	if(py2 == 1)
 		document.getElementById("py2").style.visibility = "visible";
 	else
-		document.getElementById("py2").style.visibility = "hidden";
+		if(dropped != "py2")
+			document.getElementById("py2").style.visibility = "hidden";
 	if(py3 == 1)
 		document.getElementById("py3").style.visibility = "visible";
 	else
-		document.getElementById("py3").style.visibility = "hidden";
-	if(py4 == 1)
+		if(dropped != "py3")
+			document.getElementById("py3").style.visibility = "hidden";
+	if(py3 == 1)
 		document.getElementById("py4").style.visibility = "visible";
 	else
-		document.getElementById("py4").style.visibility = "hidden";
+		if(dropped != "py4")
+			document.getElementById("py4").style.visibility = "hidden";
 
 	var i;
-	for(i = 0; i < 5; i++)
+	//Verifica os botoes que foram largados pelo individuo
+	for(i = 0; i <= dropped.length; i++)
 	{
 		if(dropped[i] == "py1")
 			document.getElementById("py1").style.visibility = "visible";
@@ -113,7 +119,7 @@ setInterval(function ()
 	}
 
 	console.log("Atualizado");
-}, 500);
+}, 200);
 
 server.onopen = () =>
 {

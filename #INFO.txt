@@ -1,0 +1,5 @@
+### Trabalho de Programação ###
+
+Integrantes -> Giordano Bruno, Luan, Tenorio Antônio.
+Feito em --> HTML, JavaScript e CSS; API WebSocket - para troca de informações entre cliente e servidor.
+Versão ---> 0.1.9.3

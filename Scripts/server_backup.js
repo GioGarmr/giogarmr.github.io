@@ -1,9 +1,13 @@
 const WebSocket = require("ws")
 const server = new WebSocket.Server({ port: 8080 })
 
-var cur_usr = "";
-var cur_pass = "";
+//Array de usuarios e senhas
+var cur_usr = "", cur_pass = "";
+var usr_id = "";
+//Cadeiras do main.html
+var py1 = 1, py2 = 1, py3 = 1, py4 = 1;
 
+//Quando o servidor estiver ativo
 server.on("connection", (ws) =>
 {
   //ws.send("Conectado ao servidor");
@@ -23,11 +27,26 @@ server.on("connection", (ws) =>
       //ws.send("usr=" + name + " " + "is=" + exist);
       ws.send(exist);
     }
-    //Salvar informacoes do usuario
+    //Salva informacoes do usuario
     else if(msgtype == "saveusr")
     {
       cur_usr = msg.user;
       cur_pass = msg.password;
+    }
+    //Pega a informacao de uso das cadeiras
+    else if(msgtype == "getchair")
+    {
+      var msg = {py1: py1, py2: py2, py3: py3, py4: py4};
+      //ws.send("hello");
+      ws.send(JSON.stringify(msg));
+    }
+    //Tranca o uso da cadeira
+    else if(msgtype == "rmchair")
+    {
+      var id = msg.id;
+	  Chairs(id);
+      var msg = {py1: py1, py2: py2, py3: py3, py4: py4};
+      ws.send(JSON.stringify(msg));
     }
   })
 })
@@ -36,13 +55,13 @@ server.on("connection", (ws) =>
 function Users ()
 {
   //Array de usuarios
-  var users = ["inacio", "DIO"];
+  var users = ["inacio", "DIO", "admin"];
   //Array de senhas
-  var pass = ["cafe123", "dioda"];
-  //Retorna true se existe, se nao - false
+  var pass = ["cafe123", "dioDa", "admin"];
+  //Retorna true se o user existe
   var exist = "false";
 
-  var i = 0;
+  var i;
   //Compara os usuarios e senhas
   for(i = 0; i <= users.length; i++)
   {
@@ -51,5 +70,20 @@ function Users ()
       exist = "true";
   }
 
+  if(cur_usr == "inacio" && exist == true)
+    usr_id = "jkkbRKzwXC";
+
   return exist;
+}
+
+function Chairs (id)
+{
+	if(id == "py1")
+	  py1 = 0;
+	else if(id == "py2")
+	  py2 = 0;
+	else if(id == "py3")
+	  py3 = 0;
+	else if(id == "py4")
+	  py4 = 0;
 }
