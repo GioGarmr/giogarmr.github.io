@@ -146,6 +146,9 @@ setInterval(function ()
 
 	//Somente para teste
 	//console.log("Atualizado");
+	
+	//Limpa o console?
+	console.clear();
 }, 200);
 
 server.onopen = () =>
