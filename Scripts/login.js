@@ -18,10 +18,10 @@ function Login ()
 	//Bool para validacao do usuario
 	var valid = false;
 
-	if(user == "socket" && pass == "")
-		window.location.replace("https://giogarmr.github.io/socket.html");
+	/*if(user == "socket" && pass == "")
+		window.location.replace("https://giogarmr.github.io/socket.html");*/
 	//Se ambos os campos estiverem vazios
-	else if(user == "" && pass == "")
+	if(user == "" && pass == "")
 		document.getElementById("warning").innerHTML = "Preencha todos os campos";
 	//Se somente o usuario estiver vazio
 	else if(user == "" && pass != "")
@@ -56,15 +56,15 @@ server.onopen = () =>
 	console.log("Conectado ao servidor");
 	//Habilita o botao de enviar quando houver conexao ao servidor
 	document.getElementById("send").disabled = false;
-	/*var msg = {type: "closed?"};
-	server.send(JSON.stringify(msg));*/
+	var msg = {type: "getU"};
+	server.send(JSON.stringify(msg));
 	//console.log(msg);
 }
 
 //Quando uma mensagem do servidor for recebida
-/*server.onmessage = (msg) =>
+server.onmessage = (e) =>
 {
 	//Armazena a mensagem do servidor
-	var msgServer = msg.data;
+	var msgServer = JSON.parse(e.data);
 	console.log(msgServer);
-}*/
+}

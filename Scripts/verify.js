@@ -20,13 +20,19 @@ server.onmessage = (msg) =>
 	console.log(msgServer);
 
 	var id = msgServer.id;
-	var is = msgServer.exist;
-	console.log(is);
+	//console.log(is);
 
-	if(is == "false")
+	if(msgServer.exist == "false")
 		window.location.replace("https://giogarmr.github.io/index.html");
 	else
-		window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
+	{
+		//Deixa o servidor saber que o user esta online
+		var s_msg = {type: "register", id: id};
+		server.send(JSON.stringify(s_msg));
+		file:///D:/Programming/HTML/Site/index.html
+		window.location.replace("file:///D:/Programming/HTML/Site/main.html?id=" + id);
+		//window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
+	}
 }
 
 //Executa quando a tela for carregada

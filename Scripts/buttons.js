@@ -130,9 +130,8 @@ setInterval(function ()
 	else
 		document.getElementById("py4").style.visibility = "hidden";
 
-	/*var i;
 	//Verifica os botoes que foram largados pelo individuo
-	for(i = 0; i <= dropped.length; i++)
+	/*for(var i = 0; i <= dropped.length; i++)
 	{
 		if(dropped[i] == "py1")
 			document.getElementById("py1").style.visibility = "visible";
@@ -146,7 +145,7 @@ setInterval(function ()
 
 	//Somente para teste
 	//console.log("Atualizado");
-	
+
 	//Limpa o console?
 	console.clear();
 }, 200);
