@@ -3,7 +3,49 @@ const address = "wss://pagina-server.glitch.me";
 //Cria o objeto websocket
 const server = new WebSocket(address);
 
-var dropped = [];
+var usr_id = "";
+//var dropped = [];
+var py1 = "";
+var py2 = "";
+var py3 = "";
+var py4 = "";
+
+//Executa quando a janela for carregada
+window.onload = function ()
+{
+	var i;
+	//Armazena uma parte da barra de enderecos
+	var url = location.search;
+
+	//Pega o id do user na barra de endereco
+	for(i = 0; ; i++)
+	{
+		if(url[i] == "=")
+		{
+			i += 1;
+			for(i; ; i++)
+			{
+				if(url[i] == null)
+					break;
+				usr_id += url[i];
+			}
+			break;
+		}
+	}
+
+	console.log("id=" + usr_id);
+};
+
+//Executa antes da janela ser fechada ou atualizada
+window.onbeforeunload = function ()
+{
+	var msg = {type: "clear", id: usr_id};
+	server.send(JSON.stringify(msg));
+	py1 = "";
+	py2 = "";
+	py3 = "";
+	py4 = "";
+};
 
 //Permite que o botao seja largado, se ele estiver sobre a area
 window.allowDrop = function(action)
@@ -40,32 +82,28 @@ window.drop = function(action)
 
 	//Printa o id do botao fixado
 	console.log("dropped: " + id);
-	dropped.push(id);
+	//dropped.push(id);
 
-	console.log(dropped);
+	//console.log(dropped);
 
 	if(id == "py1")
-		SendInfo("rmchair", "py1");
+		SendInfo("py1");
 	if(id == "py2")
-		SendInfo("rmchair", "py2");
+		SendInfo("py2");
 	if(id == "py3")
-		SendInfo("rmchair", "py3");
+		SendInfo("py3");
 	if(id == "py4")
-		SendInfo("rmchair", "py4");
+		SendInfo("py4");
 
 	//Gambiarra para manter a tela do calendario alinhada
 	//calendar.style.marginTop = "-55px";
 	calendar.style.visibility = "visible";
 };
 
-var py1 = 0;
-var py2 = 0;
-var py3 = 0;
-var py4 = 0;
-
-function SendInfo (type, id)
+function SendInfo (chair)
 {
-	var msg = {type: type, id: id};
+	var msg = {type: "claim", id: usr_id, chair: chair};
+	console.log(msg);
 	server.send(JSON.stringify(msg));
 }
 
@@ -75,36 +113,24 @@ setInterval(function ()
 	var msg = {type: "getchair"};
 	server.send(JSON.stringify(msg));
 
-	if(py1 == 1)
-	{
+	if(py1 == "" || py1 == usr_id)
 		document.getElementById("py1").style.visibility = "visible";
-		document.getElementById("dz").children[0].style.visibility = "visible";
-	}
 	else
-	{
-		if(dropped != "py1")
-		{
-			document.getElementById("py1").style.visibility = "hidden";
-			document.getElementById("dz").childNodes[0].style.visibility = "hidden";
-		}
-	}
-	if(py2 == 1)
+		document.getElementById("py1").style.visibility = "hidden";
+	if(py2 == "" || py2 == usr_id)
 		document.getElementById("py2").style.visibility = "visible";
 	else
-		if(dropped != "py2")
-			document.getElementById("py2").style.visibility = "hidden";
-	if(py3 == 1)
+		document.getElementById("py2").style.visibility = "hidden";
+	if(py3 == "" || py3 == usr_id)
 		document.getElementById("py3").style.visibility = "visible";
 	else
-		if(dropped != "py3")
-			document.getElementById("py3").style.visibility = "hidden";
-	if(py3 == 1)
+		document.getElementById("py3").style.visibility = "hidden";
+	if(py4 == "" || py4 == usr_id)
 		document.getElementById("py4").style.visibility = "visible";
 	else
-		if(dropped != "py4")
-			document.getElementById("py4").style.visibility = "hidden";
+		document.getElementById("py4").style.visibility = "hidden";
 
-	var i;
+	/*var i;
 	//Verifica os botoes que foram largados pelo individuo
 	for(i = 0; i <= dropped.length; i++)
 	{
@@ -116,9 +142,10 @@ setInterval(function ()
 			document.getElementById("py3").style.visibility = "visible";
 		if(dropped[i] == "py4")
 			document.getElementById("py4").style.visibility = "visible";
-	}
+	}*/
 
-	console.log("Atualizado");
+	//Somente para teste
+	//console.log("Atualizado");
 }, 200);
 
 server.onopen = () =>
@@ -127,6 +154,7 @@ server.onopen = () =>
 	//Habilita o botao de enviar quando houver conexao ao servidor
 	document.getElementById("loading").style.visibility = "hidden";
 	//console.log(msg);
+	//Chair? WTF
 	var msg = {type: "getchair"};
 
 	server.send(JSON.stringify(msg));
@@ -136,11 +164,12 @@ server.onmessage = (e) =>
 {
 	//Armazena a mensagem do servidor
 	var msgServer = JSON.parse(e.data);
-	//var msgServer = e.data;
+
+	//Somente para teste
+	console.log(msgServer);
+
 	py1 = msgServer.py1;
 	py2 = msgServer.py2;
 	py3 = msgServer.py3;
 	py4 = msgServer.py4;
-
-	console.log(msgServer);
 }

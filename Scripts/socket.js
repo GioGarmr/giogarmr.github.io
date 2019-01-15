@@ -25,10 +25,10 @@ server.onerror = (error) =>
 }
 
 //Quando a mensagem do servidor for recebida
-server.onmessage = (e) =>
+server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
-	var msgServer = e.data;
+	var msgServer = msg.data;
 
 	console.log(msgServer);
 	//Adiciona o conteudo de "msgServer" a+a label

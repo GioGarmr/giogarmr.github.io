@@ -7,36 +7,49 @@
 
 #login
 {
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
-	font-family: courier;
 }
 
 #usr
 {
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
-	font-family: courier;
 }
 
 #password
 {
-	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
-	font-family: courier;
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
 }
 
 #psswd
 {
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
-	font-family: courier;
 }
 
 #send
 {
-	font-family: courier;
+	font-family: "roboto";
+	font-size: 17px;
+	color: black;
 }
 
 #warning
 {
+	font-family: "roboto";
+	font-size: 18px;
 	color: red;
-	text-shadow: 2px 2px 2px rgba(255, 0, 0, 0.55);
-	font-family: courier;
+	//text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+}
+
+@font-face
+{
+	font-family: "roboto";
+	src: url("roboto.ttf");
+	font-weight: 400;
+	font-style: normal;
 }

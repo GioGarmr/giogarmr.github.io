@@ -13,15 +13,20 @@ server.onopen = () =>
 }
 
 //Quando a mensagem do servidor for recebida
-server.onmessage = (e) =>
+server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
-	var msgServer = e.data;
+	var msgServer = JSON.parse(msg.data);
 	console.log(msgServer);
-	if(msgServer == "false")
+
+	var id = msgServer.id;
+	var is = msgServer.exist;
+	console.log(is);
+
+	if(is == "false")
 		window.location.replace("https://giogarmr.github.io/index.html");
 	else
-		window.location.replace("https://giogarmr.github.io/main.html");
+		window.location.replace("file:///D:/Programming/HTML/Site/main.html?id=" + id);
 }
 
 //Executa quando a tela for carregada
