@@ -3,10 +3,10 @@ const server = new WebSocket.Server({ port: 8080 })
 
 //Array de usuarios e senhas
 var cur_usr = "", cur_pass = "";
+//Id do ultimo usuario a fazer requisicao
 var usr_id = "";
 //Cadeiras do main.html
 var py1 = "", py2 = "", py3 = "", py4 = "";
-var closed = "";
 
 //Quando o servidor estiver ativo
 server.on("connection", (ws) =>
@@ -19,8 +19,9 @@ server.on("connection", (ws) =>
 		var msg = JSON.parse(message);
 		//Pega o tipo da mensagem
 		var msgtype = msg.type;
+    //ws.send(JSON.stringify(msg));
 
-		//Se o tipo da mensagem for "usr" - ou seja - verificacao de usuario
+		//Verificacao de usuario
 		if(msgtype == "usr")
 		{
 			//Armazena o que a funcao "Users" retornar
@@ -45,11 +46,12 @@ server.on("connection", (ws) =>
 		//Tranca o uso da cadeira
 		else if(msgtype == "claim")
 		{
-			var id = msgtype.id;
-			var chair = msgtype.chair;
+			var id = msg.id;
+			var chair = msg.chair;
+      //var msg = {type: id};
+			//ws.send(JSON.stringify(msg));
 			Chairs(id, chair);
-			var msg = {py1: py1, py2: py2, py3: py3, py4: py4};
-			ws.send(JSON.stringify(msg));
+			//var msg = {type: "claimed", py1: py1, py2: py2, py3: py3, py4: py4};
 		}
 		//"Limpa" uma cadeira do id atual
 		else if(msgtype == "clear")
@@ -66,9 +68,9 @@ function Users ()
 	//Array de usuarios
 	var users = ["inacio", "DIO", "admin"];
 	//Array de senhas
-	var pass = ["cafe123", "dioDa", "admin"];
+	var pass = ["cafe123", "dioda", "admin"];
 	//Ids dos usuarios
-	var id = ["jkkbRKzwXC", "", ""];
+	var id = ["jkkbRKzwXC", "FdKjHsqkC5", ""];
 	//Retorna true se o user existe
 	var exist = "false";
 
@@ -90,17 +92,17 @@ function Users ()
 //Relaciona as cadeiras com os users
 function Chairs (id, chair)
 {
-	if(chair == "py1" && chair == "")
+	if(chair == "py1" && py1 == "")
 		py1 = id;
-	else if(chair == "py2" && chair == "")
+	else if(chair == "py2" && py2 == "")
 		py2 = id;
-	else if(chair == "py3" && chair == "")
+	else if(chair == "py3" && py3 == "")
 		py3 = id;
-	else if(chair == "py4" && chair == "")
+	else if(chair == "py4" && py4 == "")
 		py4 = id;
 }
 
-//Remove um id relacionada a uma cadeira
+//Remove um id relacionado a uma cadeira
 function Clear (id)
 {
 	if(py1 == id)

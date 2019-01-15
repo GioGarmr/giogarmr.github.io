@@ -26,7 +26,7 @@ server.onmessage = (msg) =>
 	if(is == "false")
 		window.location.replace("https://giogarmr.github.io/index.html");
 	else
-		window.location.replace("file:///D:/Programming/HTML/Site/main.html?id=" + id);
+		window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
 }
 
 //Executa quando a tela for carregada
