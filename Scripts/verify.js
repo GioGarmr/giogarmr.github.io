@@ -30,8 +30,8 @@ server.onmessage = (msg) =>
 		var s_msg = {type: "register", id: id};
 		server.send(JSON.stringify(s_msg));
 		file:///D:/Programming/HTML/Site/index.html
-		window.location.replace("file:///D:/Programming/HTML/Site/main.html?id=" + id);
-		//window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
+		//window.location.replace("file:///D:/Programming/HTML/Site/main.html?id=" + id);
+		window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
 	}
 }
 
