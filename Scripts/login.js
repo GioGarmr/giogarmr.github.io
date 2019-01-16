@@ -39,22 +39,23 @@ function Login ()
 		valid = true;
 	}
 
+	//Envia os dados e muda para a checagem
 	if(valid == true)
 	{
 		var msg = {type: "saveusr", user: user, password: pass};
 		console.log(msg);
 		server.send(JSON.stringify(msg));
+		//window.location.replace("file:///D:/Programming/HTML/Inacio/check.html");
+		window.location.replace("https://giogarmr.github.io/check.html");
 	}
-
-	return valid;
 }
 
-//Quando a conexao for estabelecida. Tambem "desperta" o servidor
+//Quando a conexao for estabelecida. Tambem reinicia o servidor
 //caso o mesmo esteja "dormindo"
 server.onopen = () =>
 {
 	console.log("Conectado ao servidor");
-	//Habilita o botao de enviar quando houver conexao ao servidor
+	//Habilita o botao de enviar quando houver conexao com o servidor
 	document.getElementById("send").disabled = false;
 	var msg = {type: "getU"};
 	server.send(JSON.stringify(msg));
@@ -62,9 +63,9 @@ server.onopen = () =>
 }
 
 //Quando uma mensagem do servidor for recebida
-server.onmessage = (e) =>
+server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
-	var msgServer = JSON.parse(e.data);
+	var msgServer = JSON.parse(msg.data);
 	console.log(msgServer);
 }

@@ -42,8 +42,8 @@
 {
 	font-family: "roboto";
 	font-size: 18px;
-	color: red;
-	//text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+	color: #FF2F2F;
+	text-shadow: 2px 2px 4px black;
 }
 
 @font-face

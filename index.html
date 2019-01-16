@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- V.0.2.1.2 -->
+<!-- V.0.2.2 -->
 <html lang="pt" dir="ltr">
 	<head>
 		<meta charset="utf-8">
@@ -11,18 +11,16 @@
 	</head>
 	<body bgcolor="#5F5C5D">
 		<div class="container">
-			<form action="passcheck.html" onsubmit="return Login();">
-				<!-- Login -->
-				<br><label id="login">Login:</label></br>
-				<input id="usr" type="text" name="user">
-				<!-- Senha -->
-				<br><label id="password">Senha:</label></br>
-				<input id="psswd" type="password" name="pass">
-				<!-- Botao de enviar -->
-				<br><input id="send" type="submit" value="Enviar" disabled></br>
-				<!-- Campo de avisos -->
-				<p id="warning"></p>
-			</form>
+			<!-- Login -->
+			<br><label id="login">Login:</label></br>
+			<input id="usr" type="text" name="user">
+			<!-- Senha -->
+			<br><label id="password">Senha:</label></br>
+			<input id="psswd" type="password" name="pass">
+			<!-- Botao de enviar -->
+			<br><input id="send" type="submit" onclick="Login();" value="Enviar" disabled></br>
+			<!-- Campo de avisos -->
+			<p id="warning"></p>
 		</div>
 	</body>
 </html>
