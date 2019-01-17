@@ -1,8 +1,6 @@
 const WebSocket = require("ws")
 const server = new WebSocket.Server({ port: 8080 })
 
-//Id do ultimo usuario a fazer requisicao
-var usr_id = "";
 //Cadeiras do main.html
 var py1 = "", py2 = "", py3 = "", py4 = "";
 //Users online
@@ -25,11 +23,11 @@ server.on("connection", (ws) =>
 		if(msgtype == "usr")
 		{
 			var user = msg.user;
-      var passwd = msg.password;
-      //Armazena o que a funcao "Users" retornar
-			var exist = Users(user, passwd);
+			var passwd = msg.password;
+			//Armazena os valores que a funcao "Users" retornar
+			var rtrn = Users(user, passwd);
 			//ws.send("usr=" + name + " " + "is=" + exist);
-			var m_msg = {type: "reply", exist: exist, id: usr_id};
+			var m_msg = {type: "reply", exist: rtrn[0], id: rtrn[1]};
 			ws.send(JSON.stringify(m_msg));
 		}
 		//Pega a informacao de uso das cadeiras
@@ -65,7 +63,7 @@ server.on("connection", (ws) =>
 			on_users.push(id);
 		}
 		//Pega os usuarios que estao online
-		else if(msgtype == "getU")
+		else if(msgtype == "getusers")
 		{
 			var m_msg = {online_users: on_users};
 			ws.send(JSON.stringify(m_msg));
@@ -82,6 +80,8 @@ function Users (user, passwd)
 	var pass = ["cafe123", "dioda", "admin"];
 	//Ids dos usuarios
 	var id = ["jkkbRKzwXC", "FdKjHsqkC5", "aDmIn"];
+	//Salva o id do user - temporariamente
+	var u_id;
 	//Retorna true se o user existe
 	var exist = "false";
 
@@ -93,20 +93,21 @@ function Users (user, passwd)
 		if(user == users[i] && passwd == pass[i])
 		{
 			exist = "true";
-			usr_id = id[i];
+			u_id = id[i];
 		}
 		if(exist == "true")
 		{
 			//Verifica se o user esta online
 			for(var g = 0; g <= on_users.length; g++)
 			{
-				if(usr_id == on_users[g])
-				  exist = "logged";
+				if(u_id == on_users[g])
+					exist = "logged";
 			}
 		}
 	}
 
-	return exist;
+	//Retorna os valores em um array
+	return [exist, u_id];
 }
 
 //Relaciona as cadeiras com os users
@@ -140,7 +141,7 @@ function Clear (id)
 		if(on_users[i] == id)
 		{
 			on_users.splice(i, 1);
-			  break;
+			break;
 		}
 	}
 }

@@ -43,7 +43,7 @@ function Login ()
 	if(valid == true)
 	{
 		var msg = {type: "usr", user: user, password: pass};
-		//console.log(msg);
+		console.log(msg);
 		server.send(JSON.stringify(msg));
 		//window.location.replace("file:///D:/Programming/HTML/Inacio/check.html");
 		//window.location.replace("https://giogarmr.github.io/check.html");
@@ -74,7 +74,7 @@ server.onopen = () =>
 	console.log("Conectado ao servidor");
 	//Habilita o botao de enviar quando houver conexao com o servidor
 	document.getElementById("send").disabled = false;
-	var msg = {type: "getU"};
+	var msg = {type: "getusers"};
 	server.send(JSON.stringify(msg));
 	//console.log(msg);
 }
@@ -84,7 +84,7 @@ server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
 	var msgServer = JSON.parse(msg.data);
-	//console.log(msgServer);
+	console.log(msgServer);
 
 	if(msgServer.type == "reply")
 		Check(msgServer.exist, msgServer.id);
