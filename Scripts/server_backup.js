@@ -1,13 +1,12 @@
 const WebSocket = require("ws")
 const server = new WebSocket.Server({ port: 8080 })
 
-var cur_usr = "", cur_pass = "";
 //Id do ultimo usuario a fazer requisicao
 var usr_id = "";
 //Cadeiras do main.html
 var py1 = "", py2 = "", py3 = "", py4 = "";
 //Users online
-var on_users = ["GIO"];
+var on_users = [""];
 
 //Quando o servidor estiver ativo
 server.on("connection", (ws) =>
@@ -25,17 +24,13 @@ server.on("connection", (ws) =>
 		//Verificacao de usuario
 		if(msgtype == "usr")
 		{
-			//Armazena o que a funcao "Users" retornar
-			var exist = Users();
+			var user = msg.user;
+      var passwd = msg.password;
+      //Armazena o que a funcao "Users" retornar
+			var exist = Users(user, passwd);
 			//ws.send("usr=" + name + " " + "is=" + exist);
-			var m_msg = {exist: exist, id: usr_id};
+			var m_msg = {type: "reply", exist: exist, id: usr_id};
 			ws.send(JSON.stringify(m_msg));
-		}
-		//Salva informacoes do usuario
-		else if(msgtype == "saveusr")
-		{
-			cur_usr = msg.user;
-			cur_pass = msg.password;
 		}
 		//Pega a informacao de uso das cadeiras
 		else if(msgtype == "getchair")
@@ -79,7 +74,7 @@ server.on("connection", (ws) =>
 })
 
 //Verifica os usuarios
-function Users ()
+function Users (user, passwd)
 {
 	//Array de usuarios
 	var users = ["inacio", "DIO", "admin"];
@@ -95,7 +90,7 @@ function Users ()
 	for(i = 0; i <= users.length; i++)
 	{
 		//Caso o usuario exista, muda para "true"
-		if(cur_usr == users[i] && cur_pass == pass[i])
+		if(user == users[i] && passwd == pass[i])
 		{
 			exist = "true";
 			usr_id = id[i];
@@ -106,7 +101,7 @@ function Users ()
 			for(var g = 0; g <= on_users.length; g++)
 			{
 				if(usr_id == on_users[g])
-				exist = "false";
+				  exist = "logged";
 			}
 		}
 	}
@@ -145,7 +140,7 @@ function Clear (id)
 		if(on_users[i] == id)
 		{
 			on_users.splice(i, 1);
-			break;
+			  break;
 		}
 	}
 }

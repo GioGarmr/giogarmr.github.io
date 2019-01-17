@@ -39,14 +39,31 @@ function Login ()
 		valid = true;
 	}
 
-	//Envia os dados e muda para a checagem
+	//Envia os dados para verificacao
 	if(valid == true)
 	{
-		var msg = {type: "saveusr", user: user, password: pass};
-		console.log(msg);
+		var msg = {type: "usr", user: user, password: pass};
+		//console.log(msg);
 		server.send(JSON.stringify(msg));
 		//window.location.replace("file:///D:/Programming/HTML/Inacio/check.html");
-		window.location.replace("https://giogarmr.github.io/check.html");
+		//window.location.replace("https://giogarmr.github.io/check.html");
+	}
+}
+
+//Verica o status do usuario
+function Check (reply, id)
+{
+	if(reply == "false")
+		document.getElementById("warning").innerHTML = "O usuário não existe";
+	else if(reply == "logged")
+		document.getElementById("warning").innerHTML = "O usuario está online";
+	else
+	{
+		//Deixa o servidor saber que o user esta online
+		var s_msg = {type: "register", id: id};
+		server.send(JSON.stringify(s_msg));
+		//window.location.replace("file:///D:/Programming/HTML/Inacio/main.html?id=" + id);
+		window.location.replace("https://giogarmr.github.io/main.html?id=" + id);
 	}
 }
 
@@ -67,5 +84,8 @@ server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
 	var msgServer = JSON.parse(msg.data);
-	console.log(msgServer);
+	//console.log(msgServer);
+
+	if(msgServer.type == "reply")
+		Check(msgServer.exist, msgServer.id);
 }
