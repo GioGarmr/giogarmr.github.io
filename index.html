@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- V.0.2.3.1 -->
+<!-- V.0.2.4.1 -->
 <html lang="pt" dir="ltr">
 	<head>
 		<meta charset="utf-8">
@@ -13,10 +13,10 @@
 		<div class="container">
 			<!-- Login -->
 			<br><label id="login">Login:</label></br>
-			<input id="usr" type="text" name="user">
+			<input id="usr" type="text" onkeydown="PressKey(event);" name="user">
 			<!-- Senha -->
 			<br><label id="password">Senha:</label></br>
-			<input id="psswd" type="password" name="pass">
+			<input id="psswd" type="password" onkeydown="PressKey(event);" name="pass">
 			<!-- Botao de enviar -->
 			<br><input id="send" type="submit" onclick="Login();" value="Enviar" disabled></br>
 			<!-- Campo de avisos -->

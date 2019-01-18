@@ -87,7 +87,7 @@ function Users (user, passwd)
 
 	var i;
 	//Compara os usuarios e senhas
-	for(i = 0; i <= users.length; i++)
+	for(i = 0; i < users.length; i++)
 	{
 		//Caso o usuario exista, muda para "true"
 		if(user == users[i] && passwd == pass[i])
@@ -135,7 +135,7 @@ function Clear (id)
 	if(py4 == id)
 		py4 = "";
 
-	//Muda o status do id para offline
+	//Remove o user offline do array "on_users"
 	for(var i = 0; i < on_users.length; i++)
 	{
 		if(on_users[i] == id)

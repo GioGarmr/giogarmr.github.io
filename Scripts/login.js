@@ -43,7 +43,7 @@ function Login ()
 	if(valid == true)
 	{
 		var msg = {type: "usr", user: user, password: pass};
-		console.log(msg);
+		//console.log(msg);
 		server.send(JSON.stringify(msg));
 		//window.location.replace("file:///D:/Programming/HTML/Inacio/check.html");
 		//window.location.replace("https://giogarmr.github.io/check.html");
@@ -67,6 +67,15 @@ function Check (reply, id)
 	}
 }
 
+//Quando o usuario pressionar uma tecla
+function PressKey (event)
+{
+	//Se a tela pressionada for "Enter" - KeyCode: 13
+	if(event.keyCode == 13 || event.which == 13)
+		Login();
+	//console.log(event.keyCode);
+}
+
 //Quando a conexao for estabelecida. Tambem reinicia o servidor
 //caso o mesmo esteja "dormindo"
 server.onopen = () =>
@@ -74,6 +83,7 @@ server.onopen = () =>
 	console.log("Conectado ao servidor");
 	//Habilita o botao de enviar quando houver conexao com o servidor
 	document.getElementById("send").disabled = false;
+
 	var msg = {type: "getusers"};
 	server.send(JSON.stringify(msg));
 	//console.log(msg);
@@ -84,7 +94,7 @@ server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
 	var msgServer = JSON.parse(msg.data);
-	console.log(msgServer);
+	//console.log(msgServer);
 
 	if(msgServer.type == "reply")
 		Check(msgServer.exist, msgServer.id);

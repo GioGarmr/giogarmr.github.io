@@ -4,11 +4,6 @@ const address = "wss://pagina-server.glitch.me";
 const server = new WebSocket(address);
 
 var usr_id = "";
-//var dropped = [];
-var py1 = "";
-var py2 = "";
-var py3 = "";
-var py4 = "";
 
 //Executa quando a janela for carregada
 window.onload = function ()
@@ -41,10 +36,6 @@ window.onbeforeunload = function ()
 {
 	var msg = {type: "clear", id: usr_id};
 	server.send(JSON.stringify(msg));
-	py1 = "";
-	py2 = "";
-	py3 = "";
-	py4 = "";
 };
 
 //Permite que o botao seja largado, se ele estiver sobre a area
@@ -62,7 +53,6 @@ window.allowDrop = function(action)
 window.button = function(action)
 {
 	action.dataTransfer.setData("id", action.target.id);
-	//GetInfo();
 };
 
 //Nota: A demo do RE2 Remake foi liberada, depois vejo isso
@@ -76,15 +66,12 @@ window.drop = function(action)
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
 
-	//Fixa o "filho" na "dropzone"
+	//Fixa o "filho" na dropzone
 	action.target.appendChild(dragged);
 	dragged.className += " dropped";
 
 	//Printa o id do botao fixado
 	console.log("dropped: " + id);
-	//dropped.push(id);
-
-	//console.log(dropped);
 
 	if(id == "py1")
 		SendInfo("py1");
@@ -103,16 +90,13 @@ window.drop = function(action)
 function SendInfo (chair)
 {
 	var msg = {type: "claim", id: usr_id, chair: chair};
-	console.log(msg);
+	//console.log(msg);
 	server.send(JSON.stringify(msg));
 }
 
-//Atualiza os botoes em um intervalo de 0,2 segundos
-setInterval(function ()
+//Ativa ou desativa os botoes de acordo com seu dono
+function Toggle (py1, py2, py3, py4)
 {
-	var msg = {type: "getchair"};
-	server.send(JSON.stringify(msg));
-
 	if(py1 == "" || py1 == usr_id)
 		document.getElementById("py1").style.visibility = "visible";
 	else
@@ -129,26 +113,20 @@ setInterval(function ()
 		document.getElementById("py4").style.visibility = "visible";
 	else
 		document.getElementById("py4").style.visibility = "hidden";
+}
 
-	//Verifica os botoes que foram largados pelo individuo
-	/*for(var i = 0; i <= dropped.length; i++)
-	{
-		if(dropped[i] == "py1")
-			document.getElementById("py1").style.visibility = "visible";
-		if(dropped[i] == "py2")
-			document.getElementById("py2").style.visibility = "visible";
-		if(dropped[i] == "py3")
-			document.getElementById("py3").style.visibility = "visible";
-		if(dropped[i] == "py4")
-			document.getElementById("py4").style.visibility = "visible";
-	}*/
+//Atualiza os botoes em um intervalo de 0,25 segundos
+setInterval(function ()
+{
+	var msg = {type: "getchair"};
+	server.send(JSON.stringify(msg));
 
 	//Somente para teste
 	//console.log("Atualizado");
 
 	//Limpa o console?
-	console.clear();
-}, 200);
+	//console.clear();
+}, 250);
 
 server.onopen = () =>
 {
@@ -162,16 +140,18 @@ server.onopen = () =>
 	server.send(JSON.stringify(msg));
 }
 
-server.onmessage = (e) =>
+server.onmessage = (msg) =>
 {
 	//Armazena a mensagem do servidor
-	var msgServer = JSON.parse(e.data);
+	var msgServer = JSON.parse(msg.data);
 
 	//Somente para teste
-	console.log(msgServer);
+	//console.log(msgServer);
 
-	py1 = msgServer.py1;
-	py2 = msgServer.py2;
-	py3 = msgServer.py3;
-	py4 = msgServer.py4;
+	var py1 = msgServer.py1;
+	var py2 = msgServer.py2;
+	var py3 = msgServer.py3;
+	var py4 = msgServer.py4;
+
+	Toggle(py1, py2, py3, py4);
 }
