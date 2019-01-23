@@ -7,7 +7,6 @@ const server = new WebSocket(address);
 server.onopen = () =>
 {
 	//var msg = "Kimi... mō JoJo to kisu wa shita no kai? Madada yo nā. Hajimete no aite wa JoJo de wa nai!";
-	//var msg = "Knock knock";
 	var msg = {type: "usr", user: "inacio", password: "cafe123"}
 
 	//Envia uma mensagem ao servidor

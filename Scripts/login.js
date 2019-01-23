@@ -80,13 +80,19 @@ function PressKey (event)
 //caso o mesmo esteja "dormindo"
 server.onopen = () =>
 {
-	console.log("Conectado ao servidor");
+	console.log("Conectado");
 	//Habilita o botao de enviar quando houver conexao com o servidor
 	document.getElementById("send").disabled = false;
 
 	var msg = {type: "getusers"};
 	server.send(JSON.stringify(msg));
 	//console.log(msg);
+}
+
+//Caso a conexao seja encerrada
+server.onclose = () =>
+{
+	console.log("Desconectado");
 }
 
 //Quando uma mensagem do servidor for recebida

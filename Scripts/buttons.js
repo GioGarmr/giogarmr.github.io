@@ -1,7 +1,7 @@
 //Endereco do servidor
 const address = "wss://pagina-server.glitch.me";
 //Cria o objeto websocket
-const server = new WebSocket(address);
+const server = new WebSocket(address);;
 
 var usr_id = "";
 
@@ -130,7 +130,7 @@ setInterval(function ()
 
 server.onopen = () =>
 {
-	console.log("Conectado ao servidor");
+	console.log("Conectado");
 	//Habilita o botao de enviar quando houver conexao ao servidor
 	document.getElementById("loading").style.visibility = "hidden";
 	//console.log(msg);
@@ -138,6 +138,12 @@ server.onopen = () =>
 	var msg = {type: "getchair"};
 
 	server.send(JSON.stringify(msg));
+}
+
+//Caso a conexao seja encerrada
+server.onclose = () =>
+{
+	console.log("Desconectado");
 }
 
 server.onmessage = (msg) =>
