@@ -70,12 +70,19 @@ window.drop = function (action)
 
 	//console.log("DropzoneID: " + d_id);
 
-	if(id == "py1" || id == "py2" || id == "py3" || id == "py4")
+	if(d_id == "dz" || d_id == "bdz")
 	{
-		//Os ids acima so podem ser largados na zona "dz"
-		if(d_id == "dz" || d_id == "bdz")
+		if(id == "py1" || id == "py2" || id == "py3" || id == "py4")
 		{
 			//Fixa o "filho" na dropzone
+			action.target.appendChild(dragged);
+			dragged.className += " dropped";
+		}
+	}
+	else if(d_id == "dz2" || d_id == "dz3")
+	{
+		if(id != "py1" || id != "py2" || id != "py3" || id != "py4")
+		{
 			action.target.appendChild(dragged);
 			dragged.className += " dropped";
 		}
@@ -138,9 +145,32 @@ function Toggle (py1, py2, py3, py4)
 		document.getElementById("py4").style.visibility = "hidden";
 }
 
+//Numero para os botoes criados
+var b_num = 0;
+
+//Cria um botao
 function Click (id)
 {
-	console.log("Clicked: " + id);
+	//Cria o objeto - botao
+	var button = document.createElement("div");
+	//MUDA MUDA MUDA MUDA MUDA o texto do botao
+	button.innerHTML = id;
+	//Adiciona um classe ao botao
+	//NOTA: Necessario para o style do mesmo
+	button.classList.add("botao");
+
+	//Adiciona os atributos para arrastar o botao
+	button.setAttribute("draggable", "true");
+	button.setAttribute("ondragstart", "button(event)");
+
+	//MUDA MUDA MUDA MUDA MUDA o id do botao
+	//NOTA: Cada botao precisa ter um id unico
+	button.id = "sub_" + b_num;
+	b_num++;
+
+	//console.log("Clicked: " + id);
+	//Fixa o botao em algo
+	document.body.appendChild(button);
 }
 
 function ShowCalendarius ()
@@ -151,6 +181,7 @@ function ShowCalendarius ()
 	var dropz3 = document.getElementsByClassName("dropzone3");
 
 	calendar.style.visibility = "visible";
+	//Deixa todas as dropzones visiveis
 	for(var i = 0; i < dropz2.length; i++)
 		dropz2[i].style.visibility = "visible";
 	for(var i = 0; i < dropz3.length; i++)
