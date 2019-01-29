@@ -47,6 +47,13 @@ server.on("connection", (ws) =>
 			Chairs(id, chair);
 			//var msg = {type: "claimed", py1: py1, py2: py2, py3: py3, py4: py4};
 		}
+		//Liberta um botao
+		else if(msgtype == "declaim")
+		{
+			var id = msg.id;
+			var chair = msg.chair;
+			DeClaim(id, chair);
+		}
 		//Chama a funcao "Clear"
 		else if(msgtype == "clear")
 		{
@@ -75,11 +82,11 @@ server.on("connection", (ws) =>
 function Users (user, passwd)
 {
 	//Array de usuarios
-	var users = ["inacio", "DIO", "admin"];
+	var users = ["inacio", "anderson", "alisson", "saulo"];
 	//Array de senhas
-	var pass = ["cafe123", "dioda", "admin"];
+	var pass = ["python", "netacad", "c", "fluxograma"];
 	//Ids dos usuarios
-	var id = ["jkkbRKzwXC", "FdKjHsqkC5", "aDmIn"];
+	var id = ["jkkbRKzwXC", "FdKjHsqkC5", "lnILiNfkw8", "xh3pZstzq7"];
 	//Salva o id do user - temporariamente
 	var u_id;
 	//Retorna true se o user existe
@@ -87,7 +94,7 @@ function Users (user, passwd)
 
 	var i;
 	//Compara os usuarios e senhas
-	for(i = 0; i < users.length; i++)
+	for(i = 0; i <= users.length; i++)
 	{
 		//Caso o usuario exista, muda para "true"
 		if(user == users[i] && passwd == pass[i])
@@ -101,7 +108,7 @@ function Users (user, passwd)
 			for(var g = 0; g <= on_users.length; g++)
 			{
 				if(u_id == on_users[g])
-					exist = "logged";
+				exist = "logged";
 			}
 		}
 	}
@@ -114,28 +121,51 @@ function Users (user, passwd)
 function Chairs (id, chair)
 {
 	if(chair == "py1" && py1 == "")
-		py1 = id;
+	py1 = id;
 	else if(chair == "py2" && py2 == "")
-		py2 = id;
+	py2 = id;
 	else if(chair == "py3" && py3 == "")
-		py3 = id;
+	py3 = id;
 	else if(chair == "py4" && py4 == "")
-		py4 = id;
+	py4 = id;
 }
 
+function DeClaim (id, chair)
+{
+	if(chair == "py1")
+	{
+		if(py1 == id)
+		py1 = "";
+	}
+	else if(chair == "py2")
+	{
+		if(py2 == id)
+		py2 = "";
+	}
+	else if(chair == "py3")
+	{
+		if(py3 == id)
+		py3 = "";
+	}
+	else if(chair == "py4")
+	{
+		if(py4 == id)
+		py4 = "";
+	}
+}
 //Remove um id relacionado a uma ou mais cadeiras
 function Clear (id)
 {
 	if(py1 == id)
-		py1 = "";
+	py1 = "";
 	if(py2 == id)
-		py2 = "";
+	py2 = "";
 	if(py3 == id)
-		py3 = "";
+	py3 = "";
 	if(py4 == id)
-		py4 = "";
+	py4 = "";
 
-	//Remove o user offline do array "on_users"
+	//Muda o status do id para offline
 	for(var i = 0; i < on_users.length; i++)
 	{
 		if(on_users[i] == id)

@@ -19,12 +19,44 @@
 				<label id="chairs" align="right">Cadeiras:</label>
 			</div>
 			<!-- Calendarius e Label: "Dias:" -->
-			<div id="calendar"><label id="dias" align="right">Dias:</label></div>
+			<div id="calendar">
+				<label id="dias" align="right">Dias:</label>
+				<hr width="90%">
+					<text id="hora_7">7:40 - 9:45</text>
+					<text id="hora_9">10:00 - 12:00</text>
+				<hr>
+					<label id="dia_smn" align="left">Seg</label>
+					<div class="dropzone2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="dropzone3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
+					<label id="dia_smn" align="left">Ter</label>
+					<div class="dropzone2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="dropzone3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
+					<label id="dia_smn" align="left">Qua</label>
+					<div class="dropzone2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="dropzone3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
+					<label id="dia_smn" align="left">Qui</label>
+					<div class="dropzone2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="dropzone3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
+					<label id="dia_smn" align="left">Sex</label>
+					<div class="dropzone2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="dropzone3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
+			</div>
 		</div>
-		<!-- Botoes arrastaveis -->
-		<div id="py1" class="botao" draggable="true" ondragstart="button(event)">Python</div>
-		<div id="py2" class="botao" draggable="true" ondragstart="button(event)">Python 2</div>
-		<div id="py3" class="botao" draggable="true" ondragstart="button(event)">Python 3</div>
-		<div id="py4" class="botao" draggable="true" ondragstart="button(event)">Python 4</div>
+		<div class="container">
+			<!-- Dropzone dos botoes -->
+			<!-- NOTA: Os botoes ja sao "filhos" dela -->
+			<div id="bdz" class="buttonzone" ondrop="bZoneDrop(event)" ondragover="allowDrop(event)">
+				<!-- Botoes arrastaveis -->
+				<div id="py1" class="botao" draggable="true" ondragstart="button(event)" onclick="Click(id)">Python</div>
+				<div id="py2" class="botao" draggable="true" ondragstart="button(event)">Python 2</div>
+				<div id="py3" class="botao" draggable="true" ondragstart="button(event)">Python 3</div>
+				<div id="py4" class="botao" draggable="true" ondragstart="button(event)">Python 4</div>
+			</div>
+		</div>
 	</body>
 </html>

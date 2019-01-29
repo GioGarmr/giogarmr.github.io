@@ -1,7 +1,7 @@
 //Endereco do servidor
 const address = "wss://pagina-server.glitch.me";
 //Cria o objeto websocket
-const server = new WebSocket(address);;
+const server = new WebSocket(address);
 
 var usr_id = "";
 
@@ -39,7 +39,7 @@ window.onbeforeunload = function ()
 };
 
 //Permite que o botao seja largado, se ele estiver sobre a area
-window.allowDrop = function(action)
+window.allowDrop = function (action)
 {
 	action.preventDefault();
 	//Pega o atributo e verifica
@@ -50,25 +50,36 @@ window.allowDrop = function(action)
 };
 
 //Funcao chamada pelo botao
-window.button = function(action)
+window.button = function (action)
 {
 	action.dataTransfer.setData("id", action.target.id);
 };
 
 //Nota: A demo do RE2 Remake foi liberada, depois vejo isso
 //Se o botao for largado em um lugar permitido
-window.drop = function(action)
+window.drop = function (action)
 {
 	action.preventDefault();
-	var calendar = document.getElementById("calendar");
 
 	//Pega o "numero" do botao
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
 
-	//Fixa o "filho" na dropzone
-	action.target.appendChild(dragged);
-	dragged.className += " dropped";
+	//Pega o id da dropzone
+	var d_id = action.target.id;
+
+	//console.log("DropzoneID: " + d_id);
+
+	if(id == "py1" || id == "py2" || id == "py3" || id == "py4")
+	{
+		//Os ids acima so podem ser largados na zona "dz"
+		if(d_id == "dz" || d_id == "bdz")
+		{
+			//Fixa o "filho" na dropzone
+			action.target.appendChild(dragged);
+			dragged.className += " dropped";
+		}
+	}
 
 	//Printa o id do botao fixado
 	console.log("dropped: " + id);
@@ -82,10 +93,22 @@ window.drop = function(action)
 	if(id == "py4")
 		SendInfo("py4");
 
-	//Gambiarra para manter a tela do calendario alinhada
-	//calendar.style.marginTop = "-55px";
-	calendar.style.visibility = "visible";
+	if(document.getElementById("calendar").style.visibility != "visible")
+		ShowCalendarius();
 };
+
+window.bZoneDrop = function (action)
+{
+	action.preventDefault();
+	var id = action.dataTransfer.getData("id");
+	var dragged = document.getElementById(id);
+
+	action.target.appendChild(dragged);
+	dragged.className = "botao";
+
+	var msg = {type: "declaim", id: usr_id, chair: id};
+	server.send(JSON.stringify(msg));
+}
 
 function SendInfo (chair)
 {
@@ -115,6 +138,25 @@ function Toggle (py1, py2, py3, py4)
 		document.getElementById("py4").style.visibility = "hidden";
 }
 
+function Click (id)
+{
+	console.log("Clicked: " + id);
+}
+
+function ShowCalendarius ()
+{
+	var calendar = document.getElementById("calendar");
+	var dropz = document.getElementById("dz");
+	var dropz2 = document.getElementsByClassName("dropzone2");
+	var dropz3 = document.getElementsByClassName("dropzone3");
+
+	calendar.style.visibility = "visible";
+	for(var i = 0; i < dropz2.length; i++)
+		dropz2[i].style.visibility = "visible";
+	for(var i = 0; i < dropz3.length; i++)
+		dropz3[i].style.visibility = "visible";
+}
+
 //Atualiza os botoes em um intervalo de 0,25 segundos
 setInterval(function ()
 {
@@ -131,7 +173,6 @@ setInterval(function ()
 server.onopen = () =>
 {
 	console.log("Conectado");
-	//Habilita o botao de enviar quando houver conexao ao servidor
 	document.getElementById("loading").style.visibility = "hidden";
 	//console.log(msg);
 	//Chair? WTF

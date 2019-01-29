@@ -24,6 +24,21 @@ background: #515151;
 	background: #515151;
 }
 
+.buttonzone
+{
+	font-family: "roboto";
+	font-size: 18px;
+	width: 150px;
+	height: 200px;
+	margin-left: 60px;
+	margin-top: 20px;
+	width: 400px;
+	height: 100px;
+	padding: 5px;
+	background: #4C494A;
+	visibility: visible;
+}
+
 .dropzone
 {
 	font-family: "roboto";
@@ -37,6 +52,30 @@ background: #515151;
 	padding: 5px;
 	background: #4C494A;
 	visibility: visible;
+}
+
+.dropzone2
+{
+	font-family: "roboto";
+	font-size: 18px;
+	width: 10px;
+	height: 38px;
+	margin-left: 50px;
+	margin-top: -20px;
+	background: #6F6D6E;
+	visibility: hidden;
+}
+
+.dropzone3
+{
+	font-family: "roboto";
+	font-size: 18px;
+	width: 10px;
+	height: 38px;
+	margin-left: 200px;
+	margin-top: -38px;
+	background: #6F6D6E;
+	visibility: hidden;
 }
 
 /*.dropzone
@@ -89,14 +128,44 @@ visibility: visible;
 	text-align: center;
 }
 
+#hora_7
+{
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
+	display: inline-block;
+	padding-left: 60px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
+}
+
+#hora_9
+{
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
+	display: inline-block;
+	padding-left: 70px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
+}
+
+#dia_smn
+{
+	font-family: "roboto";
+	font-size: 16px;
+	color: white;
+	display: block;
+	padding-left: 10px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
+}
+
 #calendar
 {
 	font-family: "roboto";
 	font-size: 18px;
 	width: 400px;
-	height: 210px;
+	height: 360px;
 	margin-right: 60px;
-	margin-top: -210px;
+	margin-top: -300px;
 	background: #4C494A;
 	float: right;
 	visibility: hidden;
