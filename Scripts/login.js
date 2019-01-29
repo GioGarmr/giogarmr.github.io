@@ -31,7 +31,7 @@ function Login ()
 		document.getElementById("warning").innerHTML = "Senha vazia";
 	//Se a senha e o usuario forem "admin"
 	else if(user == "admin" && pass == "admin")
-		document.getElementById("warning").innerHTML = "Oh, no";
+		document.getElementById("warning").innerHTML = "Oh, no...";
 	//Se ambos tiverem algum conteudo
 	else if(user != "" && pass != "")
 	{
@@ -93,6 +93,7 @@ server.onopen = () =>
 server.onclose = () =>
 {
 	console.log("Desconectado");
+	document.getElementById("send").disabled = true;
 }
 
 //Quando uma mensagem do servidor for recebida
@@ -102,6 +103,7 @@ server.onmessage = (msg) =>
 	var msgServer = JSON.parse(msg.data);
 	//console.log(msgServer);
 
+	document.getElementById("send").disabled = false;
 	if(msgServer.type == "reply")
 		Check(msgServer.exist, msgServer.id);
 }

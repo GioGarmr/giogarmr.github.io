@@ -115,11 +115,28 @@ window.dZoneDrop = function (action)
 
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
+	var dz_id = action.target.id;
+
+	console.log("button: " + id + " " + "dropzone: " + dz_id);
 
 	action.target.appendChild(dragged);
 	dragged.className += " dropped";
 }
 
+//Dropzone para destruir objetos
+window.voidDrop = function (action)
+{
+	action.preventDefault();
+
+	var id = action.dataTransfer.getData("id");
+	var obj = document.getElementById(id);
+
+	obj.remove();
+	console.log(id + " foi enviado para outra dimensão...");
+}
+
+//O que isso faz mesmo???
+//NOTA: Ah, ok
 function SendInfo (chair)
 {
 	var msg = {type: "claim", id: usr_id, chair: chair};
@@ -127,7 +144,7 @@ function SendInfo (chair)
 	server.send(JSON.stringify(msg));
 }
 
-//Ativa ou desativa os botoes de acordo com seu dono
+//Ativa/desativa os botoes de acordo com seu dono
 function Toggle (py1, py2, py3, py4)
 {
 	if(py1 == "" || py1 == usr_id)
@@ -166,7 +183,7 @@ function Kraftwerk (id)
 	//Adiciona atributos ao botao
 	button.setAttribute("draggable", "true");
 	button.setAttribute("ondragstart", "button(event)");
-	button.setAttribute("onclick", "DestroyObj(id)");
+	button.setAttribute("onclick", "Destroy(id)");
 
 	//MUDA MUDA MUDA MUDA MUDA o id do botao
 	//NOTA: Cada botao precisa ter um id unico
@@ -178,24 +195,31 @@ function Kraftwerk (id)
 	document.body.appendChild(button);
 }
 
+//Cria um botao com o tempo agendado
+//NOTA: Nome ousado...
+function CreateTime ()
+{
+
+}
+
 //Destroi um objeto :,[
-function DestroyObj (id)
+function Destroy (id)
 {
 	var obj = document.getElementById(id);
 	obj.remove();
-	console.log(id + " foi removido");
+	console.log(id + " foi enviado para outra dimensão");
 }
 
 //Habilita tudo relacionado ao calendario
 function ShowCalendarius ()
 {
-	var calendar = document.getElementById("calendar");
-	var dropz = document.getElementById("dz");
 	var dropz2 = document.getElementsByClassName("dropzone2");
 	var dropz3 = document.getElementsByClassName("dropzone3");
 
-	//Habilita o calendario
-	calendar.style.visibility = "visible";
+	//Habilita o calendario & a voidzone
+	document.getElementById("calendar").style.visibility = "visible";
+	document.getElementsByClassName("voidzone")[0].style.visibility = "visible";
+
 	//Deixa todas as dropzones visiveis
 	for(var i = 0; i < dropz2.length; i++)
 		dropz2[i].style.visibility = "visible";
