@@ -3,15 +3,15 @@ const address = "wss://pagina-server.glitch.me";
 //Cria o objeto websocket
 const server = new WebSocket(address);
 
+//Id do usuario
 var usr_id = "";
 
 //Executa quando a janela for carregada
 window.onload = function ()
 {
-	var i;
 	//Armazena uma parte da barra de enderecos
 	var url = location.search;
-
+	var i;
 	//Pega o id do user na barra de endereco
 	for(i = 0; ; i++)
 	{
@@ -38,7 +38,7 @@ window.onbeforeunload = function ()
 	server.send(JSON.stringify(msg));
 };
 
-//Permite que o botao seja largado, se ele estiver sobre a area
+//Permite que o botao seja largado, se ele estiver sobre uma dropzone
 window.allowDrop = function (action)
 {
 	action.preventDefault();
@@ -56,37 +56,22 @@ window.button = function (action)
 };
 
 //Nota: A demo do RE2 Remake foi liberada, depois vejo isso
-//Se o botao for largado em um lugar permitido
+//Se o botao for largado
 window.drop = function (action)
 {
 	action.preventDefault();
 
-	//Pega o "numero" do botao
+	//Pega informacoes do botao
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
 
-	//Pega o id da dropzone
-	var d_id = action.target.id;
-
 	//console.log("DropzoneID: " + d_id);
 
-	if(d_id == "dz" || d_id == "bdz")
-	{
-		if(id == "py1" || id == "py2" || id == "py3" || id == "py4")
-		{
-			//Fixa o "filho" na dropzone
-			action.target.appendChild(dragged);
-			dragged.className += " dropped";
-		}
-	}
-	else if(d_id == "dz2" || d_id == "dz3")
-	{
-		if(id != "py1" || id != "py2" || id != "py3" || id != "py4")
-		{
-			action.target.appendChild(dragged);
-			dragged.className += " dropped";
-		}
-	}
+	//Fixa o "filho" na dropzone
+	action.target.appendChild(dragged);
+	dragged.className += " dropped";
+	//Permite que o botao possa criar outros ao clicar no mesmo
+	dragged.setAttribute("onclick", "Kraftwerk(id)");
 
 	//Printa o id do botao fixado
 	console.log("dropped: " + id);
@@ -100,21 +85,39 @@ window.drop = function (action)
 	if(id == "py4")
 		SendInfo("py4");
 
+	//Se o calendario estiver ocultado
 	if(document.getElementById("calendar").style.visibility != "visible")
 		ShowCalendarius();
 };
 
+//Dropzone para devolver os botoes tomados
 window.bZoneDrop = function (action)
 {
 	action.preventDefault();
+
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
 
 	action.target.appendChild(dragged);
 	dragged.className = "botao";
+	//Tira a possibilidade de criar outros botoes
+	dragged.setAttribute("onclick", "");
 
+	//Remove o status de "claim" do botao, assim ele fica disponivel novamente
 	var msg = {type: "declaim", id: usr_id, chair: id};
 	server.send(JSON.stringify(msg));
+}
+
+//Dropzone para devolver os botoes tomados
+window.dZoneDrop = function (action)
+{
+	action.preventDefault();
+
+	var id = action.dataTransfer.getData("id");
+	var dragged = document.getElementById(id);
+
+	action.target.appendChild(dragged);
+	dragged.className += " dropped";
 }
 
 function SendInfo (chair)
@@ -145,13 +148,14 @@ function Toggle (py1, py2, py3, py4)
 		document.getElementById("py4").style.visibility = "hidden";
 }
 
-//Numero para os botoes criados
+//Numero de botoes criados
 var b_num = 0;
 
 //Cria um botao
-function Click (id)
+//NOTA:	She's a model and she's looking good
+function Kraftwerk (id)
 {
-	//Cria o objeto - botao
+	//Cria o objeto; botao
 	var button = document.createElement("div");
 	//MUDA MUDA MUDA MUDA MUDA o texto do botao
 	button.innerHTML = id;
@@ -159,13 +163,14 @@ function Click (id)
 	//NOTA: Necessario para o style do mesmo
 	button.classList.add("botao");
 
-	//Adiciona os atributos para arrastar o botao
+	//Adiciona atributos ao botao
 	button.setAttribute("draggable", "true");
 	button.setAttribute("ondragstart", "button(event)");
+	button.setAttribute("onclick", "DestroyObj(id)");
 
 	//MUDA MUDA MUDA MUDA MUDA o id do botao
 	//NOTA: Cada botao precisa ter um id unico
-	button.id = "sub_" + b_num;
+	button.id = "sub_" + id + "_" + b_num;
 	b_num++;
 
 	//console.log("Clicked: " + id);
@@ -173,6 +178,15 @@ function Click (id)
 	document.body.appendChild(button);
 }
 
+//Destroi um objeto :,[
+function DestroyObj (id)
+{
+	var obj = document.getElementById(id);
+	obj.remove();
+	console.log(id + " foi removido");
+}
+
+//Habilita tudo relacionado ao calendario
 function ShowCalendarius ()
 {
 	var calendar = document.getElementById("calendar");
@@ -180,6 +194,7 @@ function ShowCalendarius ()
 	var dropz2 = document.getElementsByClassName("dropzone2");
 	var dropz3 = document.getElementsByClassName("dropzone3");
 
+	//Habilita o calendario
 	calendar.style.visibility = "visible";
 	//Deixa todas as dropzones visiveis
 	for(var i = 0; i < dropz2.length; i++)
