@@ -26,6 +26,13 @@ window.onload = function ()
 			}
 			break;
 		}
+		//Caso nao haja um id; Impede um loop infinito
+		else if(url[i] == null)
+		{
+			//window.location.replace("file:///D:/Programming/HTML/Inacio/main.html?id=none");
+			window.location.replace("https://giogarmr.github.io/main.html?id=none");
+			break;
+		}
 	}
 
 	console.log("id=" + usr_id);
@@ -65,13 +72,21 @@ window.drop = function (action)
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
 
-	//console.log("DropzoneID: " + d_id);
+	//Ids que podem ser largados nesta dropzone
+	var index_permittere = ["py1", "py2", "py3", "py4"];
 
-	//Fixa o "filho" na dropzone
-	action.target.appendChild(dragged);
-	dragged.className += " dropped";
-	//Permite que o botao possa criar outros ao clicar no mesmo
-	dragged.setAttribute("onclick", "Kraftwerk(id)");
+	//Verifica se o id esta incluso no indice de ids permitidos
+	for(var i = 0; i < index_permittere.length; i++)
+	{
+		if(id == index_permittere[i])
+		{
+			//Fixa o "filho" na dropzone
+			action.target.appendChild(dragged);
+			dragged.className += " dropped";
+			//Permite que o botao possa criar outros ao clicar no mesmo
+			dragged.setAttribute("onclick", "Kraftwerk(id)");
+		}
+	}
 
 	//Printa o id do botao fixado
 	console.log("dropped: " + id);
@@ -108,19 +123,31 @@ window.bZoneDrop = function (action)
 	server.send(JSON.stringify(msg));
 }
 
-//Dropzone para devolver os botoes tomados
+//Dropzone para os dias e horario
 window.dZoneDrop = function (action)
 {
 	action.preventDefault();
 
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
-	var dz_id = action.target.id;
+	//var dz_id = action.target.id;
 
-	console.log("button: " + id + " " + "dropzone: " + dz_id);
+	//Ids que nao podem ser largados nesta dropzone
+	var index_prohibitorum = ["py1", "py2", "py3", "py4"];
 
-	action.target.appendChild(dragged);
-	dragged.className += " dropped";
+	//console.log("button: " + id + " " + "dropzone: " + dz_id);
+
+	//Verifica se o id esta incluso no indice de ids proibidos
+	for(var i = 0; i < index_prohibitorum.length; i++)
+	{
+		if(id == index_prohibitorum[i])
+			break;
+	}
+	if(i >= index_prohibitorum.length)
+	{
+		action.target.appendChild(dragged);
+		dragged.className += " dropped";
+	}
 }
 
 //Dropzone para destruir objetos
@@ -130,9 +157,20 @@ window.voidDrop = function (action)
 
 	var id = action.dataTransfer.getData("id");
 	var obj = document.getElementById(id);
+	//Ids que nao podem ser largados nesta dropzone
+	var index_prohibitorum = ["py1", "py2", "py3", "py4"];
 
-	obj.remove();
-	console.log(id + " foi enviado para outra dimensão...");
+	//Verifica se o id esta incluso no indice de ids proibidos
+	for(var i = 0; i < index_prohibitorum.length; i++)
+	{
+		if(id == index_prohibitorum[i])
+			break;
+	}
+	if(i >= index_prohibitorum.length)
+	{
+		obj.remove();
+		console.log(id + " foi enviado para outra dimensão...");
+	}
 }
 
 //O que isso faz mesmo???
@@ -192,12 +230,12 @@ function Kraftwerk (id)
 
 	//console.log("Clicked: " + id);
 	//Fixa o botao em algo
-	document.body.appendChild(button);
+	var dropzone = document.getElementById("bdz");
+	dropzone.appendChild(button);
 }
 
 //Cria um botao com o tempo agendado
-//NOTA: Nome ousado...
-function CreateTime ()
+function TheWorld ()
 {
 
 }
