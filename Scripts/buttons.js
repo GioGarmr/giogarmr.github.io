@@ -5,6 +5,10 @@ const server = new WebSocket(address);
 
 //Id do usuario
 var usr_id = "";
+//Numero de botoes criados
+var b_num = 0;
+//Armazena qualquer horario fixo
+var fixed_hr = [];
 
 //Executa quando a janela for carregada
 window.onload = function ()
@@ -29,8 +33,8 @@ window.onload = function ()
 		//Caso nao haja um id; Impede um loop infinito
 		else if(url[i] == null)
 		{
-			//window.location.replace("file:///D:/Programming/HTML/Inacio/main.html?id=none");
-			window.location.replace("https://giogarmr.github.io/main.html?id=none");
+			window.location.replace("file:///D:/Programming/HTML/Inacio/main.html?id=none");
+			//window.location.replace("https://giogarmr.github.io/main.html?id=none");
 			break;
 		}
 	}
@@ -71,7 +75,6 @@ window.drop = function (action)
 	//Pega informacoes do botao
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
-
 	//Ids que podem ser largados nesta dropzone
 	var index_permittere = ["py1", "py2", "py3", "py4"];
 
@@ -118,10 +121,21 @@ window.bZoneDrop = function (action)
 	//Tira a possibilidade de criar outros botoes
 	dragged.setAttribute("onclick", "");
 
+	//console.log("RETURNED:" + id);
+
+	//Destroi seus clones
+	for(var i = 0; i < b_num; i++)
+	{
+		var obj = document.getElementById("sub_" + id + "_" + i);
+		//Se o objeto for encontrado
+		if(obj)
+			obj.remove();
+	}
+
 	//Remove o status de "claim" do botao, assim ele fica disponivel novamente
 	var msg = {type: "declaim", id: usr_id, chair: id};
 	server.send(JSON.stringify(msg));
-}
+};
 
 //Dropzone para os dias e horario
 window.dZoneDrop = function (action)
@@ -130,25 +144,21 @@ window.dZoneDrop = function (action)
 
 	var id = action.dataTransfer.getData("id");
 	var dragged = document.getElementById(id);
-	//var dz_id = action.target.id;
+	//Pega o id da dropzone
+	var dz_id = action.target.id;
 
-	//Ids que nao podem ser largados nesta dropzone
-	var index_prohibitorum = ["py1", "py2", "py3", "py4"];
+	console.log("button: " + id + " " + "dropzone: " + dz_id);
 
-	//console.log("button: " + id + " " + "dropzone: " + dz_id);
-
-	//Verifica se o id esta incluso no indice de ids proibidos
-	for(var i = 0; i < index_prohibitorum.length; i++)
+	if(id[0] == "s")
 	{
-		if(id == index_prohibitorum[i])
-			break;
+		//Se o objeto nao tiver um "child", o botao sera fixado
+		if(!document.getElementById(dz_id).firstChild)
+		{
+			action.target.appendChild(dragged);
+			dragged.className += " dropped";
+		}
 	}
-	if(i >= index_prohibitorum.length)
-	{
-		action.target.appendChild(dragged);
-		dragged.className += " dropped";
-	}
-}
+};
 
 //Dropzone para destruir objetos
 window.voidDrop = function (action)
@@ -157,21 +167,31 @@ window.voidDrop = function (action)
 
 	var id = action.dataTransfer.getData("id");
 	var obj = document.getElementById(id);
-	//Ids que nao podem ser largados nesta dropzone
-	var index_prohibitorum = ["py1", "py2", "py3", "py4"];
 
-	//Verifica se o id esta incluso no indice de ids proibidos
-	for(var i = 0; i < index_prohibitorum.length; i++)
-	{
-		if(id == index_prohibitorum[i])
-			break;
-	}
-	if(i >= index_prohibitorum.length)
+	if(id[0] != "p")
 	{
 		obj.remove();
+		//Cream
 		console.log(id + " foi enviado para outra dimensão...");
 	}
-}
+};
+
+//Dropzone para agendar salas
+window.classDrop = function (action)
+{
+	action.preventDefault();
+
+	var id = action.dataTransfer.getData("id");
+	var dragged = document.getElementById(id);
+	//Pega o id da dropzone
+	//var dz_id = action.target.id;
+
+	if(id[0] == "_")
+	{
+		action.target.appendChild(dragged);
+		dragged.className += " dropped";
+	}
+};
 
 //O que isso faz mesmo???
 //NOTA: Ah, ok
@@ -203,9 +223,6 @@ function Toggle (py1, py2, py3, py4)
 		document.getElementById("py4").style.visibility = "hidden";
 }
 
-//Numero de botoes criados
-var b_num = 0;
-
 //Cria um botao
 //NOTA:	She's a model and she's looking good
 function Kraftwerk (id)
@@ -221,7 +238,7 @@ function Kraftwerk (id)
 	//Adiciona atributos ao botao
 	button.setAttribute("draggable", "true");
 	button.setAttribute("ondragstart", "button(event)");
-	button.setAttribute("onclick", "Destroy(id)");
+	button.setAttribute("onclick", "TheWorld(id, parentNode.id)");
 
 	//MUDA MUDA MUDA MUDA MUDA o id do botao
 	//NOTA: Cada botao precisa ter um id unico
@@ -235,18 +252,79 @@ function Kraftwerk (id)
 }
 
 //Cria um botao com o tempo agendado
-function TheWorld ()
+function TheWorld (id, dz_id)
 {
+	//Cria o objeto - botao
+	var button = document.createElement("div");
+	//MUDA MUDA MUDA MUDA MUDA o texto do botao
 
+	//console.log("THIS BUTTON IS:" + id);
+
+	var buttonid = "";
+	var collect = false;
+	for(var i = 0; i < id.length; i++)
+	{
+		if(id[i] == "p")
+			collect = true;
+		if(collect && id[i] != null && id[i] != "_")
+			buttonid += id[i];
+		if(id[i] == "_")
+			collect = false;
+	}
+
+	//console.log("NAME:" + buttonid);
+
+	//7 as 9
+	if(dz_id == "dz1_7")
+		button.innerHTML = "Seg(7:40-9:40)";
+	else if(dz_id == "dz2_7")
+		button.innerHTML = "Ter(7:40-9:40)";
+	else if(dz_id == "dz3_7")
+		button.innerHTML = "Qua(7:40-9:40)";
+	else if(dz_id == "dz4_7")
+		button.innerHTML = "Qui(7:40-9:40)";
+	else if(dz_id == "dz5_7")
+		button.innerHTML = "Sex(7:40-9:40)";
+	//10 as 12
+	else if(dz_id == "dz1_10")
+		button.innerHTML = "Seg(10:00-12:00)";
+	else if(dz_id == "dz2_10")
+		button.innerHTML = "Ter(10:00-12:00)";
+	else if(dz_id == "dz3_10")
+		button.innerHTML = "Qua(10:00-12:00)";
+	else if(dz_id == "dz4_10")
+		button.innerHTML = "Qui(10:00-12:00)";
+	else if(dz_id == "dz5_10")
+		button.innerHTML = "Sex(10:00-12:00)";
+
+	//Adiciona o id ao botao
+	button.innerHTML += buttonid;
+
+	//Adiciona um classe ao botao
+	//NOTA: Necessario para o style do mesmo
+	button.classList.add("botao");
+
+	//Adiciona atributos ao botao
+	button.setAttribute("draggable", "true");
+	button.setAttribute("ondragstart", "button(event)");
+	//button.setAttribute("onclick", "TheWorld(id, parentNode.id)");
+
+	//MUDA MUDA MUDA MUDA MUDA o id do botao
+	//NOTA: Cada botao precisa ter um id unico
+	button.id = "_" + dz_id + "$" + id;
+	b_num++;
+
+	//console.log("id: " + id + " " + "dzId: " + dz_id);
+	//Fixa o botao em algo
+	var dropzone = document.getElementById("bdz");
+	dropzone.appendChild(button);
 }
 
-//Destroi um objeto :,[
-function Destroy (id)
+//Destroi um objeto :,(
+/*function Destroy (id)
 {
-	var obj = document.getElementById(id);
-	obj.remove();
-	console.log(id + " foi enviado para outra dimensão");
-}
+	document.getElementById(id).remove();
+}*/
 
 //Habilita tudo relacionado ao calendario
 function ShowCalendarius ()
@@ -263,16 +341,90 @@ function ShowCalendarius ()
 		dropz2[i].style.visibility = "visible";
 	for(var i = 0; i < dropz3.length; i++)
 		dropz3[i].style.visibility = "visible";
+
+	ShowClassrooms();
 }
 
-//Atualiza os botoes em um intervalo de 0,25 segundos
+//Habilita a janela de salas de aula
+function ShowClassrooms ()
+{
+	var dropz = document.getElementsByClassName("classdropzone");
+
+	document.getElementById("classrooms").style.visibility = "visible";
+
+	for(var i = 0; i < dropz.length; i++)
+		dropz[i].style.visibility = "visible";
+}
+
+//Atualiza informacoes em um intervalo de 0,25 segundos
 setInterval(function ()
 {
+	//Array de dropzones
+	var dropzones = [];
+	//Dropzone para verificacao
+	var cur_zone;
+
+	//Atualiza as cadeiras
 	var msg = {type: "getchair"};
 	server.send(JSON.stringify(msg));
 
-	//Somente para teste
-	//console.log("Atualizado");
+	//Joga as dropzones no array; It just works
+	dropzones.push(document.getElementById("dz1_7"));
+	dropzones.push(document.getElementById("dz1_10"));
+	dropzones.push(document.getElementById("dz2_7"));
+	dropzones.push(document.getElementById("dz2_10"));
+	dropzones.push(document.getElementById("dz3_7"));
+	dropzones.push(document.getElementById("dz3_10"));
+	dropzones.push(document.getElementById("dz4_7"));
+	dropzones.push(document.getElementById("dz4_10"));
+	dropzones.push(document.getElementById("dz5_7"));
+	dropzones.push(document.getElementById("dz5_10"));
+
+	//console.log(dropzones);
+
+	//Verifica as dropzones no array
+	//NOTA: Nao sei se isso pode impactar a performance, mas funciona, ou seja, nao mexa
+	for(var i = 0; i < dropzones.length; i++)
+	{
+		//Se a dropzone tiver um "filho"
+		if(dropzones[i].firstChild)
+		{
+			var child = dropzones[i].firstChild;
+			console.log("childId: " + child.id + " " + "dropzoneId: " + dropzones[i].id);
+		}
+	}
+
+	//Armazena as dropzones das salas de aula
+	var labsdropzs = document.getElementsByClassName("classdropzone");
+
+	//Verifica as dropzones das salas de aula
+	for(var i = 0; i < labsdropzs.length; i++)
+	{
+		//Se tal dropzone tiver um "child"
+		if(labsdropzs[i].firstChild)
+		{
+			var child = labsdropzs[i].firstChild;
+			console.log("CHILD:" + child.id + " " + "DROPZONE:" + labsdropzs[i].id);
+
+			//Pega todas as informacoes necessarias do botao
+			var collect = false;
+			var b_id = "";
+			for(var g = 0; g < child.id.length; g++)
+			{
+				if(child.id[g] == "$")
+				{
+					collect = true;
+					g++;
+				}
+				if(collect == true && child.id[g] != null)
+					b_id += child.id[g];
+			}
+			//Printa as informacoes do botao e do seu "mestre"
+			var master = document.getElementById(b_id);
+			console.log("CLASS_b_id:" + b_id + " " + "BUTTON_MASTER:" + master.id + " "
+			+ "MASTER_ZONE:" + master.parentNode.id);
+		}
+	}
 
 	//Limpa o console?
 	//console.clear();

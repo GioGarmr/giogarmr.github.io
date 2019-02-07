@@ -10,7 +10,7 @@
 		<script type="text/javascript" src="Scripts/buttons.js"></script>
 	</head>
 	<body bgcolor="#5F5C5D">
-		<h2 id="horarios" align="left">Horários<h2>
+		<h2 id="horarios" align="left">Horários</h2>
 		<div><label id="loading" align="right">Conectando...</label></div>
 		<!-- Dropzone principal & Calendario -->
 		<div class="container">
@@ -50,6 +50,14 @@
 				<div id="void_dz" class="voidzone" ondrop="voidDrop(event)" ondragover="allowDrop(event)">
 					<label id="void" align="left">Vazio:</label>
 				</div>
+			</div>
+			<!-- Salas de aula -->
+			<div id="classrooms">
+				<label id="dias" align="right">Salas:</label>
+				<hr width="90%">
+					<label id="labs" align="right">Lab 1</label>
+					<div id="dzlab1" class="classdropzone" ondrop="classDrop(event)" ondragover="allowDrop(event)"></div>
+				<hr>
 			</div>
 		</div>
 		<div class="container">

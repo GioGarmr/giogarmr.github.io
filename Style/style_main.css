@@ -70,7 +70,7 @@ background: #515151;
 	font-size: 18px;
 	margin-left: 50px;
 	margin-top: -20px;
-	width: 10px;
+	width: 130px;
 	height: 38px;
 	background: #6F6D6E;
 	visibility: hidden;
@@ -82,7 +82,7 @@ background: #515151;
 	font-size: 18px;
 	margin-left: 200px;
 	margin-top: -38px;
-	width: 10px;
+	width: 130px;
 	height: 38px;
 	background: #6F6D6E;
 	visibility: hidden;
@@ -98,6 +98,18 @@ background: #515151;
 	height: 20px;
 	padding: 5px;
 	background: #4C494A;
+	visibility: hidden;
+}
+
+.classdropzone
+{
+	font-family: "roboto";
+	font-size: 18px;
+	margin-left: 55px;
+	margin-top: -23px;
+	width: 130px;
+	height: 38px;
+	background: #6F6D6E;
 	visibility: hidden;
 }
 
@@ -192,6 +204,39 @@ visibility: visible;
 	background: #4C494A;
 	float: right;
 	visibility: hidden;
+}
+
+#classrooms
+{
+	font-family: "roboto";
+	font-size: 18px;
+	width: 200px;
+	height: 360px;
+	margin-right: 20px;
+	margin-top: -300px;
+	background: #4C494A;
+	float: right;
+	visibility: hidden;
+}
+
+#labs
+{
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
+	display: block;
+	padding-left: 7px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
+}
+
+#classdz
+{
+	font-family: "roboto";
+	font-size: 18px;
+	color: white;
+	display: inline-block;
+	padding-left: 60px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.55);
 }
 
 #void

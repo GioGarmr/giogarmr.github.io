@@ -1,0 +1,7 @@
+### Lista de Afazeres ###
+Conflito de horários []
+Salvar progresso []
+
+NOTA:
+Faça o botao das salas conter todas as informações de agendamento ex: py1_seg7_lab1.
+Então o mesmo que enviará as informações para o servidor.
