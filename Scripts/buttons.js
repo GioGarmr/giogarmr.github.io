@@ -186,7 +186,7 @@ window.classDrop = function (action)
 	//Pega o id da dropzone
 	//var dz_id = action.target.id;
 
-	if(id[0] == "_")
+	if(id[0] == "(")
 	{
 		action.target.appendChild(dragged);
 		dragged.className += " dropped";
@@ -274,31 +274,18 @@ function TheWorld (id, dz_id)
 
 	//console.log("NAME:" + buttonid);
 
-	//7 as 9
-	if(dz_id == "dz1_7")
-		button.innerHTML = "Seg(7:40-9:40)";
-	else if(dz_id == "dz2_7")
-		button.innerHTML = "Ter(7:40-9:40)";
-	else if(dz_id == "dz3_7")
-		button.innerHTML = "Qua(7:40-9:40)";
-	else if(dz_id == "dz4_7")
-		button.innerHTML = "Qui(7:40-9:40)";
-	else if(dz_id == "dz5_7")
-		button.innerHTML = "Sex(7:40-9:40)";
-	//10 as 12
-	else if(dz_id == "dz1_10")
-		button.innerHTML = "Seg(10:00-12:00)";
-	else if(dz_id == "dz2_10")
-		button.innerHTML = "Ter(10:00-12:00)";
-	else if(dz_id == "dz3_10")
-		button.innerHTML = "Qua(10:00-12:00)";
-	else if(dz_id == "dz4_10")
-		button.innerHTML = "Qui(10:00-12:00)";
-	else if(dz_id == "dz5_10")
-		button.innerHTML = "Sex(10:00-12:00)";
+	//Cadeiras: Py1, Py2, Py3 e Py4
+	if(id.substring(0,7) == "sub_py1")
+		button.innerHTML += "Py";
+	else if(id.substring(0,7) == "sub_py2")
+		button.innerHTML += "Py2";
+	else if(id.substring(0,7) == "sub_py3")
+		button.innerHTML += "Py3";
+	else if(id.substring(0,7) == "sub_py4")
+		button.innerHTML += "Py4";
 
 	//Adiciona o id ao botao
-	button.innerHTML += buttonid;
+	//button.innerHTML += buttonid;
 
 	//Adiciona um classe ao botao
 	//NOTA: Necessario para o style do mesmo
@@ -311,8 +298,10 @@ function TheWorld (id, dz_id)
 
 	//MUDA MUDA MUDA MUDA MUDA o id do botao
 	//NOTA: Cada botao precisa ter um id unico
-	button.id = "_" + dz_id + "$" + id;
+	button.id = "(" + dz_id + "$" + id;
 	b_num++;
+
+	//console.log("WORLD:" + id)
 
 	//console.log("id: " + id + " " + "dzId: " + dz_id);
 	//Fixa o botao em algo
@@ -384,7 +373,7 @@ setInterval(function ()
 
 	//Verifica as dropzones no array
 	//NOTA: Nao sei se isso pode impactar a performance, mas funciona, ou seja, nao mexa
-	for(var i = 0; i < dropzones.length; i++)
+	/*for(var i = 0; i < dropzones.length; i++)
 	{
 		//Se a dropzone tiver um "filho"
 		if(dropzones[i].firstChild)
@@ -392,7 +381,7 @@ setInterval(function ()
 			var child = dropzones[i].firstChild;
 			console.log("childId: " + child.id + " " + "dropzoneId: " + dropzones[i].id);
 		}
-	}
+	}*/
 
 	//Armazena as dropzones das salas de aula
 	var labsdropzs = document.getElementsByClassName("classdropzone");
@@ -404,13 +393,15 @@ setInterval(function ()
 		if(labsdropzs[i].firstChild)
 		{
 			var child = labsdropzs[i].firstChild;
-			console.log("CHILD:" + child.id + " " + "DROPZONE:" + labsdropzs[i].id);
+			//console.log("CHILD:" + child.id + " " + "DROPZONE:" + labsdropzs[i].id);
 
 			//Pega todas as informacoes necessarias do botao
 			var collect = false;
 			var b_id = "";
 			for(var g = 0; g < child.id.length; g++)
 			{
+				if(child.id[g] == "*")
+					break;
 				if(child.id[g] == "$")
 				{
 					collect = true;
@@ -419,10 +410,57 @@ setInterval(function ()
 				if(collect == true && child.id[g] != null)
 					b_id += child.id[g];
 			}
-			//Printa as informacoes do botao e do seu "mestre"
+
 			var master = document.getElementById(b_id);
-			console.log("CLASS_b_id:" + b_id + " " + "BUTTON_MASTER:" + master.id + " "
-			+ "MASTER_ZONE:" + master.parentNode.id);
+			//Id do botao
+			var childId = child.id;
+			//Id da zone do botao
+			var childZoneId = child.parentNode.id;
+			//Id da zone do master
+			var masterZoneId = master.parentNode.id;
+
+			//Printa as informacoes do botao e do seu "mestre"
+			console.log("CLASS_BUTTON_ID:" + childId + " " + "DROPZONE:" + childZoneId);
+			console.log("CLASS_BUTTON_MASTER:" + b_id + " " + "DROPZONE:" + masterZoneId);
+
+			//AQUI EM DIANTE SERA A MODIFICACAO DAS INFORMACOES DO BOTAO
+
+			//NOTA: O substring usa uma certa parte da string
+			//Segunda
+			if(masterZoneId.substring(0,3) == "dz1")
+				child.innerHTML = "Seg";
+			//Terca
+			else if(masterZoneId.substring(0,3) == "dz2")
+				child.innerHTML = "Ter";
+			//Quarta
+			else if(masterZoneId.substring(0,3) == "dz3")
+				child.innerHTML = "Qua";
+			//Quinta
+			else if(masterZoneId.substring(0,3) == "dz4")
+				child.innerHTML = "Qui";
+			//Sexta
+			else if(masterZoneId.substring(0,3) == "dz5")
+				child.innerHTML = "Sex";
+
+			//Horario A e B
+			if(masterZoneId.substring(4,5) == "7")
+				child.innerHTML += "(A)";
+			else
+				child.innerHTML += "(B)";
+
+			//Cadeiras: Py1, Py2, Py3 e Py4
+			if(b_id.substring(0,7) == "sub_py1")
+				child.innerHTML += "Py";
+			else if(b_id.substring(0,7) == "sub_py2")
+				child.innerHTML += "Py2";
+			else if(b_id.substring(0,7) == "sub_py3")
+				child.innerHTML += "Py3";
+			else if(b_id.substring(0,7) == "sub_py4")
+				child.innerHTML += "Py4";
+
+			//Atualiza as informacoes do Botao
+			//Mesmo esquema, ex: (dz1_7$sub_py1_0
+			child.id = "(" + masterZoneId + "$" + b_id + "*" + childZoneId;
 		}
 	}
 
